@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/cinemania/static/css/main.7acaea2f.css",
+    "main.js": "/cinemania/static/js/main.07d3183d.js",
+    "index.html": "/cinemania/index.html",
+    "main.7acaea2f.css.map": "/cinemania/static/css/main.7acaea2f.css.map",
+    "main.07d3183d.js.map": "/cinemania/static/js/main.07d3183d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7acaea2f.css",
+    "static/js/main.07d3183d.js"
+  ]
+}
