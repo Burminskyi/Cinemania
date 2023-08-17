@@ -1,24 +1,22 @@
-import { Link, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { ImageGalleryItem } from 'components/MoviesGalleryItem/MoviesGalleryItem';
+import { SearchForm } from 'components/SearchForm/SearchForm';
+import {
+  StyledCatalogContainer,
+  StyledCatalogList,
+} from 'components/WeeklyTrends/WeeklyTrendsStyled';
+import { StyledMoviesList } from './MoviesList.styled';
 
-export const MoviesList = ({ movies }) => {
-  const location = useLocation();
-
+export const MoviesList = ({ weeklyTrendingMovies }) => {
   return (
-    <ul>
-      {movies.map(movie => {
-        return (
-          <li key={movie.id}>
-            <Link to={`/catalog/${movie.id}`} state={{ from: location }}>
-              {movie.original_title}
-            </Link>
-          </li>
-        );
-      })}
-    </ul>
+    <StyledMoviesList>
+      <StyledCatalogContainer>
+        <SearchForm />
+        <StyledCatalogList>
+          {weeklyTrendingMovies.map(movie => (
+            <ImageGalleryItem key={movie.id} movie={movie} />
+          ))}
+        </StyledCatalogList>
+      </StyledCatalogContainer>
+    </StyledMoviesList>
   );
-};
-
-MoviesList.propTypes = {
-  movies: PropTypes.array.isRequired,
 };

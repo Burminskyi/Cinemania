@@ -1,17 +1,18 @@
 import {
+  StyledHeroRatingBody,
   StyledRatingActive,
-  StyledRatingBody,
   StyledRatingItem,
   StyledRatingItems,
 } from './Rating.styled';
 
-const Rating = ({ rating }) => {
-
-  const calculatedRating = Math.round(rating * 10)+'%';
+const HeroRating = ({ rating }) => {
+  const calculatedRating = Math.round(rating * 10) + '%';
 
   return (
-    <StyledRatingBody>
-      <StyledRatingActive style={{ width: `${calculatedRating}` }}></StyledRatingActive>
+    <StyledHeroRatingBody>
+      <StyledRatingActive
+        style={{ width: `${calculatedRating}` }}
+      ></StyledRatingActive>
       <StyledRatingItems>
         <StyledRatingItem
           type="radio"
@@ -44,12 +45,8 @@ const Rating = ({ rating }) => {
           name="rating"
         />
       </StyledRatingItems>
-    </StyledRatingBody>
+    </StyledHeroRatingBody>
   );
 };
 
-export default Rating;
-
-
-
-
+export default HeroRating;

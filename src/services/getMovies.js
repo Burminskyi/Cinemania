@@ -18,6 +18,23 @@ export const getTrendingMovies = async () => {
   return data;
 };
 
+export const getUpcomingMovies = async () => {
+  const res = await fetch(
+    `${BASE_URL}movie/upcoming?language=en-US&page=1&${API_KEY}`
+  );
+  const data = await res.json();
+  return data;
+};
+
+export const getWeeklyTrendingMovies = async () => {
+  const res = await fetch(
+    `${BASE_URL}trending/all/week?language=en-US`,
+    options
+  );
+  const data = await res.json();
+  return data;
+};
+
 export const getMoviesById = async id => {
   const res = await fetch(`${BASE_URL}movie/${id}language=en-US&`, options);
   const data = await res.json();

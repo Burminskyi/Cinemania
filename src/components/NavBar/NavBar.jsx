@@ -4,7 +4,14 @@ import logo from './header-logo.svg';
 
 const NavBar = () => {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      variant="dark"
+      style={{
+        backgroundColor: 'var(--black)',
+      }}
+    >
       <Container>
         <Navbar.Brand style={{ fontSize: '32px', marginRight: '60px' }}>
           <img

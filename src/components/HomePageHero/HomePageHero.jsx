@@ -1,18 +1,24 @@
-import Rating from 'components/Rating/Rating';
-import { Button, Carousel } from 'react-bootstrap';
-import styles from './HomePageHero.module.css';
 import { useEffect, useState } from 'react';
 import { getTrendingMovies } from 'services/getMovies';
+import { StyledHeroBtn, StyledHeroBtnWrap, StyledHeroContainer, StyledHeroInfoWrap, StyledHeroRating, StyledHeroSection } from './HomePageHero.styled';
+import { StyledUpcomingContentBtn } from 'components/UpcomingMovie/UpcomingMovie.styled';
+import HeroRating from 'components/Rating/HeroRating';
 
 const HomePageHero = () => {
   const imagePath = 'https://image.tmdb.org/t/p/original/';
-  const [trendingMovies, setMovies] = useState([]);
+  const [trendingMovie, setTrendingMovie] = useState(null);
 
   useEffect(() => {
     const updateComponent = async () => {
       try {
         const data = await getTrendingMovies();
-        setMovies(data.results);
+        const movies = data.results;
+
+        const randomIndex = Math.floor(Math.random() * movies.length);
+        const randomMovie = movies[randomIndex];
+        console.log('randomMovie: ', randomMovie);
+
+        setTrendingMovie(randomMovie);
       } catch (error) {
         console.log(error.message);
       }
@@ -21,77 +27,27 @@ const HomePageHero = () => {
   }, []);
 
   return (
-    <section className={styles.heroItemWrap}>
-      <Carousel slide={false}>
-              {trendingMovies.map(movie => {
-            const posterImage = `${imagePath}${movie.backdrop_path}`;
-            return (
-              <Carousel.Item key={movie.id}>
-                <img
-                  className="d-block w-100"
-                  src={posterImage}
-                  alt={movie.original_title}
-                  style={{ zIndex: '-1', position: 'relative' }}
-                />
-                <Carousel.Caption className={styles.contentWrap}>
-                  <h3>{movie.original_title}</h3>
-                  <Rating rating={movie.vote_average} />
-                  <p>{movie.overview}</p>
-                  <div className="mb-2">
-                    <Button size="lg">Watch trailer</Button>{' '}
-                    <Button size="lg">More details</Button>
-                  </div>
-                </Carousel.Caption>
-              </Carousel.Item>
-            );
-        })}
-
-        {/* <Carousel.Item>
+    <StyledHeroSection>
+      {trendingMovie && (
+        <StyledHeroContainer>
           <img
-            className="d-block w-100"
-            src="https://image.tmdb.org/t/p/original//2vFuG6bWGyQUzYS9d69E5l85nIz.jpg"
-            alt="Second slide"
+            src={imagePath + trendingMovie.backdrop_path}
+            alt={trendingMovie.original_title}
             style={{ zIndex: '-1', position: 'relative' }}
           />
-          <Carousel.Caption className={styles.contentWrap}>
-            <h3>Трансформеры</h3>
-            <Rating />
-            <p className="mb-20">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
-              quam sunt, asperiores saepe, aspernatur autem magni iusto possimus
-              nulla delectus velit corrupti illum voluptas, dolor dolore at.
-              Accusamus, hic tenetur.
-            </p>
-            <div className="mb-2">
-              <Button size="lg">Watch trailer</Button>{' '}
-              <Button size="lg">More details</Button>
-            </div>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://image.tmdb.org/t/p/original//5YZbUmjbMa3ClvSW1Wj3D6XGolb.jpg"
-            alt="Third slide"
-            style={{ zIndex: '-1', position: 'relative' }}
-          />
-          <Carousel.Caption className={styles.contentWrap}>
-            <h3>Стражи галактики</h3>
-            <Rating />
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
-              quam sunt, asperiores saepe, aspernatur autem magni iusto possimus
-              nulla delectus velit corrupti illum voluptas, dolor dolore at.
-              Accusamus, hic tenetur.
-            </p>
-            <div className="mb-2">
-              <Button size="lg">Watch trailer</Button>{' '}
-              <Button size="lg">More details</Button>
-            </div>
-          </Carousel.Caption>
-        </Carousel.Item> */}
-      </Carousel>
-    </section>
+          
+            <StyledHeroInfoWrap>
+              <h3>{trendingMovie ? trendingMovie.original_title : 'Coming soon'}</h3>
+              <HeroRating rating={trendingMovie.vote_average} />
+              <p>{trendingMovie.overview}</p>
+              <StyledHeroBtnWrap>
+                <StyledHeroBtn type="button">Watch trailer</StyledHeroBtn>
+                <StyledHeroBtn type="button">More details</StyledHeroBtn>
+              </StyledHeroBtnWrap>
+            </StyledHeroInfoWrap>
+          </StyledHeroContainer>
+      )}
+    </StyledHeroSection>
   );
 };
 
