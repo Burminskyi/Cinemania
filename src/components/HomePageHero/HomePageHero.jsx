@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getTrendingMovies } from 'services/getMovies';
 import { StyledHeroBtn, StyledHeroBtnWrap, StyledHeroContainer, StyledHeroInfoWrap, StyledHeroRating, StyledHeroSection } from './HomePageHero.styled';
-import { StyledUpcomingContentBtn } from 'components/UpcomingMovie/UpcomingMovie.styled';
 import HeroRating from 'components/Rating/HeroRating';
 
 const HomePageHero = () => {
@@ -29,13 +28,13 @@ const HomePageHero = () => {
   return (
     <StyledHeroSection>
       {trendingMovie && (
-        <StyledHeroContainer>
+        <>
           <img
             src={imagePath + trendingMovie.backdrop_path}
             alt={trendingMovie.original_title}
             style={{ zIndex: '-1', position: 'relative' }}
           />
-          
+          <StyledHeroContainer>
             <StyledHeroInfoWrap>
               <h3>{trendingMovie ? trendingMovie.original_title : 'Coming soon'}</h3>
               <HeroRating rating={trendingMovie.vote_average} />
@@ -46,6 +45,7 @@ const HomePageHero = () => {
               </StyledHeroBtnWrap>
             </StyledHeroInfoWrap>
           </StyledHeroContainer>
+        </>
       )}
     </StyledHeroSection>
   );

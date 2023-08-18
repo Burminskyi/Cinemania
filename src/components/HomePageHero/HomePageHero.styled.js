@@ -53,8 +53,5 @@ export const StyledHeroBtn = styled(StyledUpcomingContentBtn)`
     width: 180px;
     font-size: 16px;
   }
-  /* @media (min-width: 1280px) {
-    font-size: 18px;
-  } */
 `;
 

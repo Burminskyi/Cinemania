@@ -1,4 +1,4 @@
-import { ImageGalleryItem } from 'components/MoviesGalleryItem/MoviesGalleryItem';
+import { MoviesGalleryItem } from 'components/MoviesGalleryItem/MoviesGalleryItem';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -7,7 +7,12 @@ import {
   StyledWeeklyTrendsHeader,
 } from './WeeklyTrendsStyled';
 
-const WeeklyTrends = ({ weeklyTrendingMovies }) => {
+const WeeklyTrends = ({
+  weeklyTrendingMovies,
+  addToLibrary,
+  removeFromLibrary,
+  favoriteMovies
+}) => {
   const [slicedWeeklyTrendingMovies, setweeklyTrendingMovies] = useState([]);
 
   useEffect(() => {
@@ -32,7 +37,13 @@ const WeeklyTrends = ({ weeklyTrendingMovies }) => {
         </StyledWeeklyTrendsHeader>
         <StyledCatalogList>
           {slicedWeeklyTrendingMovies.map(movie => (
-            <ImageGalleryItem key={movie.id} movie={movie} />
+            <MoviesGalleryItem
+              key={movie.id}
+              movie={movie}
+              addToLibrary={addToLibrary}
+              removeFromLibrary={removeFromLibrary}
+              favoriteMovies={favoriteMovies}
+            />
           ))}
         </StyledCatalogList>
       </StyledCatalogContainer>

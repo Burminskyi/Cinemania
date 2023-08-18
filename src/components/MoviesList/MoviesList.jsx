@@ -1,4 +1,4 @@
-import { ImageGalleryItem } from 'components/MoviesGalleryItem/MoviesGalleryItem';
+import { MoviesGalleryItem } from 'components/MoviesGalleryItem/MoviesGalleryItem';
 import { SearchForm } from 'components/SearchForm/SearchForm';
 import {
   StyledCatalogContainer,
@@ -6,14 +6,25 @@ import {
 } from 'components/WeeklyTrends/WeeklyTrendsStyled';
 import { StyledMoviesList } from './MoviesList.styled';
 
-export const MoviesList = ({ weeklyTrendingMovies }) => {
+export const MoviesList = ({
+  weeklyTrendingMovies,
+  addToLibrary,
+  removeFromLibrary,
+  favoriteMovies
+}) => {
   return (
     <StyledMoviesList>
       <StyledCatalogContainer>
         <SearchForm />
         <StyledCatalogList>
           {weeklyTrendingMovies.map(movie => (
-            <ImageGalleryItem key={movie.id} movie={movie} />
+            <MoviesGalleryItem
+              key={movie.id}
+              movie={movie}
+              addToLibrary={addToLibrary}
+              removeFromLibrary={removeFromLibrary}
+              favoriteMovies={favoriteMovies}
+            />
           ))}
         </StyledCatalogList>
       </StyledCatalogContainer>
