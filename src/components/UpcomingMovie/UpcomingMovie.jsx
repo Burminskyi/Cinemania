@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import {
-  StyledUpcomingContainer,
   StyledUpcomingContentBtn,
   StyledUpcomingContentText,
   StyledUpcomingContentTitle,
@@ -16,27 +15,32 @@ import {
 } from './UpcomingMovie.styled';
 import { getUpcomingMovies } from 'services/getMovies';
 import { StyledHeroContainer } from 'components/HomePageHero/HomePageHero.styled';
+import { Loader } from 'components/Loader/Loader';
 
 export const UpcomingMovie = () => {
-  const imagePath = 'https://image.tmdb.org/t/p/original/';
+  const [isLoading, setIsLoading] = useState(false);
   const [upcomingMovie, setMovie] = useState(null);
   useEffect(() => {
     const updateComponent = async () => {
       try {
+        setIsLoading(true);
         const data = await getUpcomingMovies();
-        console.log('data: ', data.results[0]);
-
         setMovie(data.results[0]);
       } catch (error) {
         console.log(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
     updateComponent();
   }, []);
 
+  const imagePath = 'https://image.tmdb.org/t/p/original/';
+
   return (
     <section>
       <StyledHeroContainer>
+        {isLoading && <Loader />}
         {upcomingMovie && (
           <>
             <StyledUpcomingTitle>UPCOMING THIS MONTH</StyledUpcomingTitle>
@@ -79,8 +83,8 @@ export const UpcomingMovie = () => {
                         Vote / Votes
                       </StyledUpcomingListText>
                       <p style={{ marginLeft: '68px' }}>
-                        <span class="vote">{upcomingMovie.vote_average}</span> /{' '}
-                        <span class="vote">{upcomingMovie.vote_count}</span>
+                        <span>{upcomingMovie.vote_average}</span> /{' '}
+                        <span>{upcomingMovie.vote_count}</span>
                       </p>
                     </StyledUpcomingListItem>
                   </StyledUpcomingListLeft>

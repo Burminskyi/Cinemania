@@ -6,10 +6,12 @@ import { getWeeklyTrendingMovies } from 'services/getMovies';
 
 const Home = lazy(() => import('pages/Home/Home'));
 const Movies = lazy(() => import('pages/Movies/Movies'));
-const MovieDetails = lazy(() => import('../pages/MovieDetails/MovieDetails'));
 
 export const App = () => {
-  const [weeklyTrendingMovies, setweeklyTrendingMovies] = useState([]);
+  const [isTrendingMoviesLoading, setIsTrendingMoviesLoading] = useState(false);
+  const [weeklyTrendingMovies, setWeeklyTrendingMovies] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [page, setPage] = useState(1);
   const [favoriteMovies, setFavoriteMovies] = useState(() => {
     return JSON.parse(localStorage.getItem('favoriteMovies')) ?? [];
   });
@@ -17,23 +19,35 @@ export const App = () => {
   useEffect(() => {
     const updateComponent = async () => {
       try {
+        setIsTrendingMoviesLoading(true);
         localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies));
-        const data = await getWeeklyTrendingMovies();
-        setweeklyTrendingMovies(data.results);
+        const data = await getWeeklyTrendingMovies(page);
+        setTotalPages(data.total_pages);
+        setWeeklyTrendingMovies(data.results);
       } catch (error) {
         console.log(error.message);
+      } finally {
+        setIsTrendingMoviesLoading(false);
       }
     };
     updateComponent();
-  }, [favoriteMovies]);
+  }, [favoriteMovies, page]);
 
   const addToLibrary = data => {
     setFavoriteMovies(prev => [...prev, { ...data, id: data.id }]);
   };
 
-   const removeFromLibrary = id => {
-      setFavoriteMovies(prev => prev.filter(movie => movie.id !== id));
-    };
+  const removeFromLibrary = id => {
+    setFavoriteMovies(prev => prev.filter(movie => movie.id !== id));
+  };
+
+  const handlePageChange = page => {
+    setPage(page);
+  };
+
+  const setTotalMoviesByNamePagesAmount = data => {
+    setTotalPages(data);
+  };
 
   return (
     <>
@@ -43,6 +57,7 @@ export const App = () => {
             index
             element={
               <Home
+                onChangePage={handlePageChange}
                 weeklyTrendingMovies={weeklyTrendingMovies}
                 addToLibrary={addToLibrary}
                 removeFromLibrary={removeFromLibrary}
@@ -58,14 +73,21 @@ export const App = () => {
                 addToLibrary={addToLibrary}
                 removeFromLibrary={removeFromLibrary}
                 favoriteMovies={favoriteMovies}
+                totalPages={totalPages}
+                currentPage={page}
+                onChangePage={handlePageChange}
+                setTotalMoviesByNamePagesAmount={
+                  setTotalMoviesByNamePagesAmount
+                }
+                isTrendingMoviesLoading={isTrendingMoviesLoading}
               />
             }
           />
-          <Route path="catalog/:movieId" element={<MovieDetails />} />
           <Route
             path="library"
             element={
               <Library
+                onChangePage={handlePageChange}
                 favoriteMovies={favoriteMovies}
                 addToLibrary={addToLibrary}
                 removeFromLibrary={removeFromLibrary}

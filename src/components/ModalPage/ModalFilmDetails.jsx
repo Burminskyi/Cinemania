@@ -24,9 +24,9 @@ export const ModalFilmDetails = ({
     removeFromLibrary(data.id);
   };
 
-  const isInContacts = favoriteMovies && favoriteMovies.some(
-    favoriteMovie => favoriteMovie.id === data.id
-  );
+  const isInLibrary =
+    favoriteMovies &&
+    favoriteMovies.some(favoriteMovie => favoriteMovie.id === data.id);
 
   return (
     <StyledFilmDetailsContainer>
@@ -51,7 +51,7 @@ export const ModalFilmDetails = ({
           </StyledFilmDetailsList>
           <StyledFilmDetailsSection>ABOUT</StyledFilmDetailsSection>
           <StyledFilmCaption>{data.overview}</StyledFilmCaption>
-          {isInContacts ? (
+          {isInLibrary ? (
             <StyledModalBtn onClick={handleDelete}>
               Remove from library
             </StyledModalBtn>

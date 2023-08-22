@@ -7,7 +7,7 @@ import { Footer } from 'components/Footer/Footer';
 export const SharedLayout = () => {
   return (
     <>
-      <NavBar/>
+      <NavBar />
       <main>
         <Suspense fallback={<Loader />}>
           <Outlet />

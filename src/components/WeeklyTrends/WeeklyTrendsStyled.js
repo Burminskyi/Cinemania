@@ -19,8 +19,7 @@ export const StyledCatalogContainer = styled.div`
   margin-left: auto;
   margin-right: auto;
   width: 320px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 20px;
   @media (min-width: 768px) {
     width: 768px;
     padding-left: 32px;

@@ -18,6 +18,14 @@ export const getTrendingMovies = async () => {
   return data;
 };
 
+export const getTrailer = async id => {
+  const res = await fetch(
+    `${BASE_URL}movie/${id}/videos?language=en-US&${API_KEY}`
+  );
+  const data = await res.json();
+  return data;
+};
+
 export const getUpcomingMovies = async () => {
   const res = await fetch(
     `${BASE_URL}movie/upcoming?language=en-US&page=1&${API_KEY}`
@@ -26,9 +34,9 @@ export const getUpcomingMovies = async () => {
   return data;
 };
 
-export const getWeeklyTrendingMovies = async () => {
+export const getWeeklyTrendingMovies = async page => {
   const res = await fetch(
-    `${BASE_URL}trending/all/week?language=en-US`,
+    `${BASE_URL}trending/all/week?language=en-US&page=${page}`,
     options
   );
   const data = await res.json();
@@ -36,32 +44,14 @@ export const getWeeklyTrendingMovies = async () => {
 };
 
 export const getMoviesById = async id => {
-  const res = await fetch(`${BASE_URL}movie/${id}language=en-US&`, options);
+  const res = await fetch(`${BASE_URL}movie/${id}?language=en-US`, options);
   const data = await res.json();
   return data;
 };
 
-export const getMoviesByName = async query => {
+export const getMoviesByName = async (query, currentPage) => {
   const res = await fetch(
-    `${BASE_URL}search/movie?query=${query}&include_adult=false&language=en-US&page=1`,
-    options
-  );
-  const data = await res.json();
-  return data;
-};
-
-export const getMovieCredits = async id => {
-  const res = await fetch(
-    `${BASE_URL}movie/${id}/credits?language=en-US`,
-    options
-  );
-  const data = await res.json();
-  return data;
-};
-
-export const getMovieReviews = async id => {
-  const res = await fetch(
-    `${BASE_URL}movie/${id}/reviews?language=en-US&page=1`,
+    `${BASE_URL}search/movie?query=${query}&include_adult=false&language=en-US&page=${currentPage}`,
     options
   );
   const data = await res.json();

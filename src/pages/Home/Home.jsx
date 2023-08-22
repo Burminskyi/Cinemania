@@ -1,16 +1,26 @@
 import HomePageHero from 'components/HomePageHero/HomePageHero';
 import { UpcomingMovie } from 'components/UpcomingMovie/UpcomingMovie';
 import WeeklyTrends from 'components/WeeklyTrends/WeeklyTrends';
+import { useEffect } from 'react';
 
 const Home = ({
   weeklyTrendingMovies,
   addToLibrary,
   removeFromLibrary,
-  favoriteMovies
+  favoriteMovies,
+  onChangePage,
 }) => {
+  useEffect(() => {
+    onChangePage(1);
+  }, [onChangePage]);
+
   return (
     <>
-      <HomePageHero />
+      <HomePageHero
+        addToLibrary={addToLibrary}
+        removeFromLibrary={removeFromLibrary}
+        favoriteMovies={favoriteMovies}
+      />
       <WeeklyTrends
         weeklyTrendingMovies={weeklyTrendingMovies}
         addToLibrary={addToLibrary}

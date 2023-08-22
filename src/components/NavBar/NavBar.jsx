@@ -1,40 +1,63 @@
 import { Navbar, Nav, Container, Form } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import logo from './header-logo.svg';
+import {
+  StyledNavLink,
+  StyledNavList,
+  StyledNavbar,
+  StyledNavbarBrand,
+  StyledNavbarLogo,
+} from './NavBar.styled';
 
 const NavBar = () => {
   return (
-    <Navbar collapseOnSelect expand="lg" variant="dark" style={{
-      backgroundColor: 'var(--black);'
-    }}>
+    <StyledNavbar collapseOnSelect expand="lg" variant="dark">
       <Container>
-        <Navbar.Brand style={{ fontSize: '32px', marginRight: '60px' }}>
-          <img
-            alt=""
-            src={logo}
-            width="48"
-            height="48"
-            className="d-inline-block align-top"
-            style={{ fontSize: '32px', marginRight: '60px' }}
-          />{' '}
-          Cinemania
-        </Navbar.Brand>
+        <NavLink to="/">
+          <StyledNavbarBrand>
+            <StyledNavbarLogo alt="" src={logo} /> Cinemania
+          </StyledNavbarBrand>
+        </NavLink>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link>
-              <NavLink to="/">Home</NavLink>
-            </Nav.Link>
-            <Nav.Link>
-              <NavLink to="/catalog">Catalog</NavLink>
-            </Nav.Link>
-            <Nav.Link>
-              <NavLink to="/library">My library</NavLink>
-            </Nav.Link>
-          </Nav>
+          <StyledNavList className="me-auto">
+            <StyledNavLink
+              to="/"
+              style={({ isActive }) => {
+                return {
+                  fontWeight: isActive ? '600' : '',
+                  color: isActive ? 'orange' : '',
+                };
+              }}
+            >
+              Home
+            </StyledNavLink>
+            <StyledNavLink
+              to="/catalog"
+              style={({ isActive }) => {
+                return {
+                  fontWeight: isActive ? '600' : '',
+                  color: isActive ? 'orange' : '',
+                };
+              }}
+            >
+              Catalog
+            </StyledNavLink>
+            <StyledNavLink
+              to="/library"
+              style={({ isActive }) => {
+                return {
+                  fontWeight: isActive ? '600' : '',
+                  color: isActive ? 'orange' : '',
+                };
+              }}
+            >
+              My library
+            </StyledNavLink>
+          </StyledNavList>
           <Nav>
             <Form>
-              <Form.Check // prettier-ignore
+              <Form.Check
                 type="switch"
                 id="custom-switch"
                 label="Change theme"
@@ -43,7 +66,7 @@ const NavBar = () => {
           </Nav>
         </Navbar.Collapse>
       </Container>
-    </Navbar>
+    </StyledNavbar>
   );
 };
 

@@ -87,7 +87,7 @@ export const StyledFilmDetailsSection = styled.div`
 `;
 
 export const StyledFilmCaption = styled.p`
-height: 250px;
+  height: 250px;
   display: inline-block;
   margin-top: 20px !important;
   font-size: 14px;
@@ -104,5 +104,24 @@ export const StyledModalBtn = styled(StyledUpcomingContentBtn)`
   font-size: 14px;
   @media (min-width: 768px) {
     font-size: 16px;
+  }
+`;
+
+export const StyledTrailerFrame = styled.iframe`
+  width: 100%;
+  height: 100%;
+`;
+
+export const StyledTrailerWrap = styled.div`
+  width: 320px;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
+  @media (min-width: 768px) {
+    width: 640px;
+    height: 360px;
+    padding-bottom: 20px;
   }
 `;

@@ -8,7 +8,7 @@ export const StyledRatingBody = styled.div`
   color: #b7b7b7;
 
   &:before {
-    content: "☆""☆""☆""☆""☆";
+    content: '☆' '☆' '☆' '☆' '☆';
     color: #f89f19;
     display: block;
   }

@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const StyledMoviesList = styled.section`
   padding-top: 16px;

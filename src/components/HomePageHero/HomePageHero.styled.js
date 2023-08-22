@@ -41,9 +41,9 @@ export const StyledHeroInfoWrap = styled.div`
 `;
 
 export const StyledHeroBtnWrap = styled.div`
-    width: inherit;
-    display: flex;
-    justify-content: space-between;
+  width: inherit;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const StyledHeroBtn = styled(StyledUpcomingContentBtn)`
@@ -54,4 +54,3 @@ export const StyledHeroBtn = styled(StyledUpcomingContentBtn)`
     font-size: 16px;
   }
 `;
-

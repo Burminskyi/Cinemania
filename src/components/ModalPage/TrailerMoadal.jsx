@@ -1,16 +1,13 @@
 import { useEffect } from 'react';
-import { StyledModal, StyledModalOverlay } from './ModalPage.styled';
-import { ModalFilmDetails } from './ModalFilmDetails';
+import {
+  StyledModal,
+  StyledModalOverlay,
+  StyledTrailerFrame,
+  StyledTrailerWrap,
+} from './ModalPage.styled';
 import { CloseButton } from 'react-bootstrap';
 
-export const Modal = ({
-  data,
-  onClose,
-  addToLibrary,
-  removeFromLibrary,
-  favoriteMovies,
-}) => {
-  
+export const TrailerModal = ({ onClose, urlTrailer }) => {
   useEffect(() => {
     const keyDown = e => {
       if (e.code === 'Escape') {
@@ -24,9 +21,6 @@ export const Modal = ({
     };
   }, [onClose]);
 
-  const imagePath = 'https://image.tmdb.org/t/p/original/';
-  const posterImage = `${imagePath}${data.poster_path}`;
-
   const onOverlayClick = e => {
     if (e.currentTarget === e.target) {
       onClose();
@@ -37,13 +31,15 @@ export const Modal = ({
     <StyledModalOverlay onClick={onOverlayClick}>
       <StyledModal>
         <CloseButton />
-        <ModalFilmDetails
-          data={data}
-          posterImage={posterImage}
-          addToLibrary={addToLibrary}
-          removeFromLibrary={removeFromLibrary}
-          favoriteMovies={favoriteMovies}
-        />
+        <StyledTrailerWrap>
+          <StyledTrailerFrame
+            src={urlTrailer}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></StyledTrailerFrame>
+        </StyledTrailerWrap>
       </StyledModal>
     </StyledModalOverlay>
   );

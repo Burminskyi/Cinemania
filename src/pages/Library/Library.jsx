@@ -1,27 +1,44 @@
 import { MoviesGalleryItem } from 'components/MoviesGalleryItem/MoviesGalleryItem';
-import { StyledCatalogList } from 'components/WeeklyTrends/WeeklyTrendsStyled';
+import {
+  StyledCatalogContainer,
+  StyledCatalogList,
+} from 'components/WeeklyTrends/WeeklyTrendsStyled';
+import { useEffect } from 'react';
 
 const {
   default: HomePageHero,
 } = require('components/HomePageHero/HomePageHero');
 
-const Library = ({ favoriteMovies, addToLibrary, removeFromLibrary }) => {
-  console.log('favoriteMovies: ', favoriteMovies);
+const Library = ({
+  favoriteMovies,
+  addToLibrary,
+  removeFromLibrary,
+  onChangePage,
+}) => {
+  useEffect(() => {
+    onChangePage(1);
+  }, [onChangePage]);
   return (
     <>
-      <HomePageHero />
+      <HomePageHero
+        addToLibrary={addToLibrary}
+        removeFromLibrary={removeFromLibrary}
+        favoriteMovies={favoriteMovies}
+      />
       {favoriteMovies && (
-        <StyledCatalogList>
-          {favoriteMovies.map(movie => (
-            <MoviesGalleryItem
-              key={movie.id}
-              movie={movie}
-              addToLibrary={addToLibrary}
-              removeFromLibrary={removeFromLibrary}
-              favoriteMovies={favoriteMovies}
-            />
-          ))}
-        </StyledCatalogList>
+        <StyledCatalogContainer>
+          <StyledCatalogList>
+            {favoriteMovies.map(movie => (
+              <MoviesGalleryItem
+                key={movie.id}
+                movie={movie}
+                addToLibrary={addToLibrary}
+                removeFromLibrary={removeFromLibrary}
+                favoriteMovies={favoriteMovies}
+              />
+            ))}
+          </StyledCatalogList>
+        </StyledCatalogContainer>
       )}
     </>
   );

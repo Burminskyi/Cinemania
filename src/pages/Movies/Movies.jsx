@@ -1,5 +1,4 @@
 import HomePageHero from 'components/HomePageHero/HomePageHero';
-import { Loader } from 'components/Loader/Loader';
 import { MoviesList } from 'components/MoviesList/MoviesList';
 
 const Movies = ({
@@ -7,15 +6,29 @@ const Movies = ({
   addToLibrary,
   removeFromLibrary,
   favoriteMovies,
+  totalPages,
+  currentPage,
+  onChangePage,
+  setTotalMoviesByNamePagesAmount,
+  isTrendingMoviesLoading,
 }) => {
   return (
     <>
-      <HomePageHero />
+      <HomePageHero
+        addToLibrary={addToLibrary}
+        removeFromLibrary={removeFromLibrary}
+        favoriteMovies={favoriteMovies}
+      />
       <MoviesList
         weeklyTrendingMovies={weeklyTrendingMovies}
         addToLibrary={addToLibrary}
         removeFromLibrary={removeFromLibrary}
         favoriteMovies={favoriteMovies}
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onChangePage={onChangePage}
+        setTotalMoviesByNamePagesAmount={setTotalMoviesByNamePagesAmount}
+        isTrendingMoviesLoading={isTrendingMoviesLoading}
       />
     </>
   );

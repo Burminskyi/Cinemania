@@ -49,7 +49,7 @@ export const StyledUpcomingImage = styled.picture`
 `;
 
 export const StyledUpcomingContentWrap = styled.div`
-  width: 704px;
+  max-width: 704px;
 `;
 
 export const StyledUpcomingName = styled.h3`
