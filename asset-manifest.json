@@ -1,24 +1,18 @@
 {
   "files": {
-    "main.css": "/cinemania/static/css/main.e36f5cc4.css",
-    "main.js": "/cinemania/static/js/main.66d4f2d1.js",
-    "static/css/288.5d11d1cf.chunk.css": "/cinemania/static/css/288.5d11d1cf.chunk.css",
-    "static/js/288.dc45a118.chunk.js": "/cinemania/static/js/288.dc45a118.chunk.js",
-    "static/js/278.dcb83539.chunk.js": "/cinemania/static/js/278.dcb83539.chunk.js",
-    "static/css/561.a36b7dde.chunk.css": "/cinemania/static/css/561.a36b7dde.chunk.css",
-    "static/js/561.bc804dd1.chunk.js": "/cinemania/static/js/561.bc804dd1.chunk.js",
+    "main.css": "/cinemania/static/css/main.3171a86e.css",
+    "main.js": "/cinemania/static/js/main.c1eb0514.js",
+    "static/js/35.e949a071.chunk.js": "/cinemania/static/js/35.e949a071.chunk.js",
+    "static/js/359.bb94f2de.chunk.js": "/cinemania/static/js/359.bb94f2de.chunk.js",
     "static/media/header-logo.svg": "/cinemania/static/media/header-logo.183cd38e5aa31bc2be54994f4546aadb.svg",
     "index.html": "/cinemania/index.html",
-    "main.e36f5cc4.css.map": "/cinemania/static/css/main.e36f5cc4.css.map",
-    "main.66d4f2d1.js.map": "/cinemania/static/js/main.66d4f2d1.js.map",
-    "288.5d11d1cf.chunk.css.map": "/cinemania/static/css/288.5d11d1cf.chunk.css.map",
-    "288.dc45a118.chunk.js.map": "/cinemania/static/js/288.dc45a118.chunk.js.map",
-    "278.dcb83539.chunk.js.map": "/cinemania/static/js/278.dcb83539.chunk.js.map",
-    "561.a36b7dde.chunk.css.map": "/cinemania/static/css/561.a36b7dde.chunk.css.map",
-    "561.bc804dd1.chunk.js.map": "/cinemania/static/js/561.bc804dd1.chunk.js.map"
+    "main.3171a86e.css.map": "/cinemania/static/css/main.3171a86e.css.map",
+    "main.c1eb0514.js.map": "/cinemania/static/js/main.c1eb0514.js.map",
+    "35.e949a071.chunk.js.map": "/cinemania/static/js/35.e949a071.chunk.js.map",
+    "359.bb94f2de.chunk.js.map": "/cinemania/static/js/359.bb94f2de.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e36f5cc4.css",
-    "static/js/main.66d4f2d1.js"
+    "static/css/main.3171a86e.css",
+    "static/js/main.c1eb0514.js"
   ]
 }
