@@ -22,13 +22,13 @@ const HomePageHero = ({ addToLibrary, removeFromLibrary, favoriteMovies }) => {
   useEffect(() => {
     const updateComponent = async () => {
       try {
-        setIsLoading(true)
+        setIsLoading(true);
         const data = await getTrendingMovies();
         const movies = data.results;
         const randomIndex = Math.floor(Math.random() * movies.length);
         const randomMovie = movies[randomIndex];
         setTrendingMovie(randomMovie);
-        
+
         const trailerData = await getTrailer(randomMovie.id);
         const filmTrailerArr = trailerData.results;
         const trailer = filmTrailerArr.find(e => e.name === 'Official Trailer');
@@ -56,7 +56,7 @@ const HomePageHero = ({ addToLibrary, removeFromLibrary, favoriteMovies }) => {
 
   return (
     <StyledHeroSection>
-      {isLoading && <Loader/>}
+      {isLoading && <Loader />}
       {trendingMovie && (
         <>
           <img
@@ -67,7 +67,9 @@ const HomePageHero = ({ addToLibrary, removeFromLibrary, favoriteMovies }) => {
           <StyledHeroContainer>
             <StyledHeroInfoWrap>
               <h3>
-                {trendingMovie ? trendingMovie.original_title : 'Coming soon'}
+                {trendingMovie.original_title
+                  ? trendingMovie.original_title
+                  : 'Coming soon'}
               </h3>
               <HeroRating rating={trendingMovie.vote_average} />
               <p>{trendingMovie.overview}</p>

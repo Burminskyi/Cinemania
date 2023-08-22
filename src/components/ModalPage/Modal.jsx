@@ -25,7 +25,10 @@ export const Modal = ({
   }, [onClose]);
 
   const imagePath = 'https://image.tmdb.org/t/p/original/';
-  const posterImage = `${imagePath}${data.poster_path}`;
+  const posterImage = data.poster_path
+    ? `${imagePath}${data.poster_path}`
+    : 'https://marketplace.canva.com/EAE9OZ4Eh9o/1/0/1131w/canva-black-minimalist-coming-soon-poster-rmN33IHdOEM.jpg';
+
 
   const onOverlayClick = e => {
     if (e.currentTarget === e.target) {

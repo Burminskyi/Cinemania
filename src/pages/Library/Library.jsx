@@ -1,4 +1,5 @@
 import { MoviesGalleryItem } from 'components/MoviesGalleryItem/MoviesGalleryItem';
+import { LibraryNotification } from 'components/Notifications/LibraryNotification';
 import {
   StyledCatalogContainer,
   StyledCatalogList,
@@ -25,8 +26,8 @@ const Library = ({
         removeFromLibrary={removeFromLibrary}
         favoriteMovies={favoriteMovies}
       />
-      {favoriteMovies && (
-        <StyledCatalogContainer>
+      <StyledCatalogContainer>
+        {favoriteMovies.length ? (
           <StyledCatalogList>
             {favoriteMovies.map(movie => (
               <MoviesGalleryItem
@@ -38,8 +39,10 @@ const Library = ({
               />
             ))}
           </StyledCatalogList>
-        </StyledCatalogContainer>
-      )}
+        ) : (
+          <LibraryNotification />
+        )}
+      </StyledCatalogContainer>
     </>
   );
 };
