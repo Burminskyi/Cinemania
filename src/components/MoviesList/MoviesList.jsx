@@ -23,11 +23,13 @@ export const MoviesList = ({
   isTrendingMoviesLoading,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [query, setQuery] = useState(null);
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const query = searchParams.get('query');
+    setQuery(query);
     if (!query) return;
 
     const fetchMoviesByQuery = async () => {
@@ -46,7 +48,6 @@ export const MoviesList = ({
   }, [
     currentPage,
     searchParams,
-    setSearchParams,
     setTotalMoviesByNamePagesAmount,
   ]);
 
@@ -60,7 +61,7 @@ export const MoviesList = ({
     }
 
     onChangePage(1);
-    setSearchParams({ query });
+    setSearchParams({ query, page: 1 });
   };
 
   return (
@@ -98,6 +99,8 @@ export const MoviesList = ({
             totalPages={totalPages}
             currentPage={currentPage}
             onChangePage={onChangePage}
+            setSearchParams={setSearchParams}
+            query={query}
           />
         )}
       </StyledCatalogContainer>
