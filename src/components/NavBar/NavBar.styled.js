@@ -21,6 +21,10 @@ export const StyledNavbarLogo = styled.img`
 export const StyledNavList = styled(Nav)`
   display: flex;
   gap: 10px;
+  margin-bottom: 20px;
+  @media (min-width: 992px) {
+    margin-bottom: 0;
+  }
 `;
 
 export const StyledNavLink = styled(NavLink)`

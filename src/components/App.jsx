@@ -73,8 +73,8 @@ export const App = () => {
                 addToLibrary={addToLibrary}
                 removeFromLibrary={removeFromLibrary}
                 favoriteMovies={favoriteMovies}
-                totalPages={totalPages}
-                currentPage={page}
+                totalPages={Number(totalPages)}
+                currentPage={Number(page)}
                 onChangePage={handlePageChange}
                 setTotalMoviesByNamePagesAmount={
                   setTotalMoviesByNamePagesAmount

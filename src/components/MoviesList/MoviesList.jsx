@@ -22,6 +22,8 @@ export const MoviesList = ({
   setTotalMoviesByNamePagesAmount,
   isTrendingMoviesLoading,
 }) => {
+  const amountOfPages = totalPages < 500 ? totalPages : 500;
+
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState(null);
   const [movies, setMovies] = useState([]);
@@ -30,12 +32,35 @@ export const MoviesList = ({
   useEffect(() => {
     const query = searchParams.get('query');
     setQuery(query);
-    if (!query) return;
+    const page = searchParams.get('page');
+    if (page >= amountOfPages && query !== null) {
+      setSearchParams({ query, page: amountOfPages });
+      onChangePage(amountOfPages);
+    }
+
+    if (page >= amountOfPages && query === null) {
+      setSearchParams({ page: amountOfPages });
+      onChangePage(amountOfPages);
+    }
+
+    // if (page < amountOfPages) {
+    //   onChangePage(page);
+    // }
+
+    // if (page < amountOfPages && query !== null) {
+    //   onChangePage(page);
+    // }
+
+    if (page) {
+      onChangePage(page);
+    }
 
     const fetchMoviesByQuery = async () => {
       try {
         setIsLoading(true);
-        const data = await getMoviesByName(query, currentPage);
+
+        if (!query) return;
+        const data = await getMoviesByName(query, page ? page : 1);
         setTotalMoviesByNamePagesAmount(data.total_pages);
         setMovies(data.results);
       } catch (error) {
@@ -46,8 +71,12 @@ export const MoviesList = ({
     };
     fetchMoviesByQuery();
   }, [
+    amountOfPages,
     currentPage,
+    onChangePage,
+    query,
     searchParams,
+    setSearchParams,
     setTotalMoviesByNamePagesAmount,
   ]);
 
@@ -71,37 +100,39 @@ export const MoviesList = ({
         {isLoading || isTrendingMoviesLoading ? (
           <Loader />
         ) : (
-          <StyledCatalogList>
-            {movies.length
-              ? movies.map(movie => (
-                  <MoviesGalleryItem
-                    key={movie.id}
-                    movie={movie}
-                    addToLibrary={addToLibrary}
-                    removeFromLibrary={removeFromLibrary}
-                    favoriteMovies={favoriteMovies}
-                  />
-                ))
-              : weeklyTrendingMovies.map(movie => (
-                  <MoviesGalleryItem
-                    key={movie.id}
-                    movie={movie}
-                    addToLibrary={addToLibrary}
-                    removeFromLibrary={removeFromLibrary}
-                    favoriteMovies={favoriteMovies}
-                  />
-                ))}
-          </StyledCatalogList>
-        )}
+          <>
+            <StyledCatalogList>
+              {movies.length
+                ? movies.map(movie => (
+                    <MoviesGalleryItem
+                      key={movie.id}
+                      movie={movie}
+                      addToLibrary={addToLibrary}
+                      removeFromLibrary={removeFromLibrary}
+                      favoriteMovies={favoriteMovies}
+                    />
+                  ))
+                : weeklyTrendingMovies.map(movie => (
+                    <MoviesGalleryItem
+                      key={movie.id}
+                      movie={movie}
+                      addToLibrary={addToLibrary}
+                      removeFromLibrary={removeFromLibrary}
+                      favoriteMovies={favoriteMovies}
+                    />
+                  ))}
+            </StyledCatalogList>
 
-        {totalPages > 1 && (
-          <MyPagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onChangePage={onChangePage}
-            setSearchParams={setSearchParams}
-            query={query}
-          />
+            {!isLoading && totalPages > 1 && (
+              <MyPagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onChangePage={onChangePage}
+                setSearchParams={setSearchParams}
+                query={query}
+              />
+            )}
+          </>
         )}
       </StyledCatalogContainer>
     </StyledMoviesList>
