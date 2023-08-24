@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/cinemania/static/css/main.3171a86e.css",
-    "main.js": "/cinemania/static/js/main.316f58c3.js",
-    "static/js/35.e949a071.chunk.js": "/cinemania/static/js/35.e949a071.chunk.js",
-    "static/js/359.6a675182.chunk.js": "/cinemania/static/js/359.6a675182.chunk.js",
+    "main.js": "/cinemania/static/js/main.5a1a7c06.js",
+    "static/js/35.76139157.chunk.js": "/cinemania/static/js/35.76139157.chunk.js",
+    "static/js/359.83ffa94c.chunk.js": "/cinemania/static/js/359.83ffa94c.chunk.js",
     "static/media/header-logo.svg": "/cinemania/static/media/header-logo.183cd38e5aa31bc2be54994f4546aadb.svg",
     "index.html": "/cinemania/index.html",
     "main.3171a86e.css.map": "/cinemania/static/css/main.3171a86e.css.map",
-    "main.316f58c3.js.map": "/cinemania/static/js/main.316f58c3.js.map",
-    "35.e949a071.chunk.js.map": "/cinemania/static/js/35.e949a071.chunk.js.map",
-    "359.6a675182.chunk.js.map": "/cinemania/static/js/359.6a675182.chunk.js.map"
+    "main.5a1a7c06.js.map": "/cinemania/static/js/main.5a1a7c06.js.map",
+    "35.76139157.chunk.js.map": "/cinemania/static/js/35.76139157.chunk.js.map",
+    "359.83ffa94c.chunk.js.map": "/cinemania/static/js/359.83ffa94c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3171a86e.css",
-    "static/js/main.316f58c3.js"
+    "static/js/main.5a1a7c06.js"
   ]
 }
