@@ -48,3 +48,8 @@ export const StyledThemeSwitcher = styled(FormCheck)`
   }
 `;
 
+export const StyledSwitcherWrap = styled(Nav)`
+  @media (max-width: 991px) {
+    margin-bottom: 20px;
+  }
+`;

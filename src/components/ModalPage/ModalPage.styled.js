@@ -88,7 +88,8 @@ export const StyledFilmDetailsSection = styled.div`
 `;
 
 export const StyledFilmCaption = styled.p`
-  height: 250px;
+  margin-bottom: 30px;
+  height: fit-content;
   color: white;
   display: inline-block;
   margin-top: 20px !important;
@@ -96,6 +97,7 @@ export const StyledFilmCaption = styled.p`
   font-weight: 500;
   line-height: 1.14;
   @media (min-width: 768px) {
+    height: 250px;
     font-size: 16px;
   }
 `;

@@ -22,7 +22,6 @@ export const UpcomingMovie = ({
   removeFromLibrary,
   favoriteMovies,
 }) => {
-
   const [isLoading, setIsLoading] = useState(false);
   const [upcomingMovie, setMovie] = useState(null);
 

@@ -30,7 +30,7 @@ export const StyledHeroInfoWrap = styled.div`
   width: 280px;
   position: absolute;
   bottom: 30px;
-  font-size: 12px;
+  font-size: 10px;
   @media (min-width: 768px) {
     width: 400px;
     font-size: 16px;
@@ -49,9 +49,11 @@ export const StyledHeroBtnWrap = styled.div`
 export const StyledHeroBtn = styled(StyledUpcomingContentBtn)`
   width: 130px;
   font-size: 14px;
+  padding: 8px 16px;
   @media (min-width: 768px) {
     width: 180px;
     font-size: 16px;
+    padding: 12px 24px;
   }
 `;
 
@@ -60,4 +62,7 @@ export const StyledMovieCaption = styled.p`
 `;
 export const StyledHeroTitle = styled.h3`
   color: white;
+  @media (max-width: 767px) {
+    font-size: 20px;
+  }
 `;

@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
-import { StyledCloseModalBtn, StyledModal, StyledModalOverlay } from './ModalPage.styled';
+import {
+  StyledCloseModalBtn,
+  StyledModal,
+  StyledModalOverlay,
+} from './ModalPage.styled';
 import { ModalFilmDetails } from './ModalFilmDetails';
-import { CloseButton } from 'react-bootstrap';
 
 export const Modal = ({
   data,
@@ -10,7 +13,6 @@ export const Modal = ({
   removeFromLibrary,
   favoriteMovies,
 }) => {
-  
   useEffect(() => {
     const keyDown = e => {
       if (e.code === 'Escape') {
@@ -28,7 +30,6 @@ export const Modal = ({
   const posterImage = data.poster_path
     ? `${imagePath}${data.poster_path}`
     : 'https://marketplace.canva.com/EAE9OZ4Eh9o/1/0/1131w/canva-black-minimalist-coming-soon-poster-rmN33IHdOEM.jpg';
-
 
   const onOverlayClick = e => {
     if (e.currentTarget === e.target) {

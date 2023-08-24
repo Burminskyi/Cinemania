@@ -17,12 +17,12 @@ export const ModalFilmDetails = ({
   removeFromLibrary,
   favoriteMovies,
 }) => {
-  const handleClick = (e) => {
-    e.preventDefault()
+  const handleClick = e => {
+    e.preventDefault();
     addToLibrary(data);
   };
 
-  const handleDelete = (e) => {
+  const handleDelete = e => {
     e.preventDefault();
     removeFromLibrary(data.id);
   };

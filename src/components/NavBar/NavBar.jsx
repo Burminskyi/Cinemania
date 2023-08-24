@@ -1,4 +1,4 @@
-import { Navbar, Nav, Container, Form } from 'react-bootstrap';
+import { Navbar, Container, Form } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import logo from './header-logo.svg';
 import {
@@ -7,12 +7,12 @@ import {
   StyledNavbar,
   StyledNavbarBrand,
   StyledNavbarLogo,
+  StyledSwitcherWrap,
   StyledThemeSwitcher,
 } from './NavBar.styled';
 import { changeTheme } from 'services/themeSwitcher';
 
 const NavBar = () => {
-
   return (
     <StyledNavbar collapseOnSelect expand="lg">
       <Container>
@@ -58,7 +58,7 @@ const NavBar = () => {
               My library
             </StyledNavLink>
           </StyledNavList>
-          <Nav>
+          <StyledSwitcherWrap>
             <Form>
               <StyledThemeSwitcher
                 onClick={changeTheme}
@@ -67,7 +67,7 @@ const NavBar = () => {
                 label="Change theme"
               />
             </Form>
-          </Nav>
+          </StyledSwitcherWrap>
         </Navbar.Collapse>
       </Container>
     </StyledNavbar>
