@@ -1,4 +1,5 @@
 import {
+  StyledDetailsText,
   StyledFilmCaption,
   StyledFilmDetailsContainer,
   StyledFilmDetailsImg,
@@ -16,11 +17,13 @@ export const ModalFilmDetails = ({
   removeFromLibrary,
   favoriteMovies,
 }) => {
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault()
     addToLibrary(data);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (e) => {
+    e.preventDefault();
     removeFromLibrary(data.id);
   };
 
@@ -36,27 +39,29 @@ export const ModalFilmDetails = ({
           <StyledFilmDetailsList>
             <StyledFilmDetailsListItem>
               <StyledFilmDetailsSection>Vote / Votes</StyledFilmDetailsSection>
-              <div>
+              <StyledDetailsText>
                 {data.vote_average} / {data.vote_count}
-              </div>
+              </StyledDetailsText>
             </StyledFilmDetailsListItem>
             <StyledFilmDetailsListItem>
               <StyledFilmDetailsSection>Popularity</StyledFilmDetailsSection>
-              <div>{Math.round(data.popularity)}</div>
+              <StyledDetailsText>
+                {Math.round(data.popularity)}
+              </StyledDetailsText>
             </StyledFilmDetailsListItem>
             <StyledFilmDetailsListItem>
               <StyledFilmDetailsSection>Genre</StyledFilmDetailsSection>
-              <div>Comedy, Adventure, Fantasy</div>
+              <StyledDetailsText>Comedy, Adventure, Fantasy</StyledDetailsText>
             </StyledFilmDetailsListItem>
           </StyledFilmDetailsList>
           <StyledFilmDetailsSection>ABOUT</StyledFilmDetailsSection>
           <StyledFilmCaption>{data.overview}</StyledFilmCaption>
           {isInLibrary ? (
-            <StyledModalBtn onClick={handleDelete}>
+            <StyledModalBtn type="button" onClick={handleDelete}>
               Remove from library
             </StyledModalBtn>
           ) : (
-            <StyledModalBtn onClick={handleClick}>
+            <StyledModalBtn type="button" onClick={handleClick}>
               Add to my library
             </StyledModalBtn>
           )}

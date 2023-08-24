@@ -119,7 +119,6 @@ export const StyledUpcomingContentText = styled.p`
   font-weight: 400;
   font-size: 14px;
   line-height: 1.43;
-  color: var(--silver);
   @media (min-width: 768px) {
     margin-left: 4px;
   }
@@ -142,11 +141,6 @@ export const StyledUpcomingContentBtn = styled.button`
   transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1),
     background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
   &:hover {
-    color: var(--orange);
-    background: #fff;
-    border: 1px solid var(--gradient-1);
-  }
-  &:focus {
     color: var(--orange);
     background: #fff;
     border: 1px solid var(--gradient-1);

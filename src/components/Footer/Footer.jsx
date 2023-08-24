@@ -1,15 +1,15 @@
-import { StyledFooterText, StyledFooterWrap, StyledLink } from './Footer.styled';
+import { StyledFooterWrap, StyledLink } from './Footer.styled';
 
 export const Footer = () => {
   return (
     <StyledFooterWrap>
-      <StyledFooterText>
+      <p>
         Created by{' '}
         <StyledLink href="https://www.linkedin.com/in/anton-burminskyi/">
           Anton Burminskyi
         </StyledLink>{' '}
         2023
-      </StyledFooterText>
+      </p>
     </StyledFooterWrap>
   );
 };

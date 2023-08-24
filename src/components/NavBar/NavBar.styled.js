@@ -1,12 +1,13 @@
-import { Nav, Navbar, NavbarBrand } from 'react-bootstrap';
+import { FormCheck, Nav, Navbar, NavbarBrand } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 export const StyledNavbar = styled(Navbar)`
-  background-color: var(--black);
+  /* background-color: var(--black); */
 `;
 
 export const StyledNavbarBrand = styled(NavbarBrand)`
+  color: inherit;
   font-size: 32px;
   margin-right: 60px;
 `;
@@ -32,3 +33,18 @@ export const StyledNavLink = styled(NavLink)`
     color: orange;
   }
 `;
+
+export const StyledThemeSwitcher = styled(FormCheck)`
+  .form-check-input {
+    &:checked {
+      background-color: orange;
+      border-color: orange;
+    }
+    &:focus {
+      border-color: orange;
+      box-shadow: 0 0 0 0.25rem rgba(255, 165, 0, 0.25);
+      background-image: var(--bs-form-switch-bg);
+    }
+  }
+`;
+

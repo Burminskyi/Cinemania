@@ -12,8 +12,8 @@ export const StyledPaginationItem = styled(Pagination.Item)`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
 
     background-position: center;
     background-repeat: no-repeat;
@@ -37,8 +37,8 @@ export const StyledPaginationItem = styled(Pagination.Item)`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
 
     background-position: center;
     background-repeat: no-repeat;
@@ -58,8 +58,8 @@ export const StyledPaginationNext = styled(Pagination.Next)`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     background-color: transparent;
     border: none;
     color: orange;
@@ -82,8 +82,8 @@ export const StyledPaginationPrev = styled(Pagination.Prev)`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     background-color: transparent;
     border: none;
     color: orange;

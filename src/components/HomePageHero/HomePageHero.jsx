@@ -6,6 +6,8 @@ import {
   StyledHeroContainer,
   StyledHeroInfoWrap,
   StyledHeroSection,
+  StyledHeroTitle,
+  StyledMovieCaption,
 } from './HomePageHero.styled';
 import HeroRating from 'components/Rating/HeroRating';
 import { Modal } from 'components/ModalPage/Modal';
@@ -66,13 +68,13 @@ const HomePageHero = ({ addToLibrary, removeFromLibrary, favoriteMovies }) => {
           />
           <StyledHeroContainer>
             <StyledHeroInfoWrap>
-              <h3>
+              <StyledHeroTitle>
                 {trendingMovie.original_title
                   ? trendingMovie.original_title
                   : 'Coming soon'}
-              </h3>
+              </StyledHeroTitle>
               <HeroRating rating={trendingMovie.vote_average} />
-              <p>{trendingMovie.overview}</p>
+              <StyledMovieCaption>{trendingMovie.overview}</StyledMovieCaption>
               <StyledHeroBtnWrap>
                 <StyledHeroBtn type="button" onClick={onTrailerModal}>
                   Watch trailer

@@ -5,7 +5,7 @@ import {
   StyledCatalogList,
 } from 'components/WeeklyTrends/WeeklyTrendsStyled';
 import { StyledMoviesList } from './MoviesList.styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getMoviesByName } from 'services/getMovies';
 import { useSearchParams } from 'react-router-dom';
 import { MyPagination } from 'components/Pagination/Pagination';
@@ -23,13 +23,18 @@ export const MoviesList = ({
   isTrendingMoviesLoading,
 }) => {
   const amountOfPages = totalPages < 500 ? totalPages : 500;
-
+  const componentRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState(null);
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
+    if (componentRef.current) {
+      componentRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+    // window.scrollTo({ top: 800, behavior: 'smooth' });
+
     const query = searchParams.get('query');
     setQuery(query);
     const page = searchParams.get('page');
@@ -37,20 +42,10 @@ export const MoviesList = ({
       setSearchParams({ query, page: amountOfPages });
       onChangePage(amountOfPages);
     }
-
     if (page >= amountOfPages && query === null) {
       setSearchParams({ page: amountOfPages });
       onChangePage(amountOfPages);
     }
-
-    // if (page < amountOfPages) {
-    //   onChangePage(page);
-    // }
-
-    // if (page < amountOfPages && query !== null) {
-    //   onChangePage(page);
-    // }
-
     if (page) {
       onChangePage(page);
     }
@@ -94,7 +89,7 @@ export const MoviesList = ({
   };
 
   return (
-    <StyledMoviesList>
+    <StyledMoviesList ref={componentRef}>
       <StyledCatalogContainer>
         <SearchForm handleSubmit={handleSubmit} />
         {isLoading || isTrendingMoviesLoading ? (

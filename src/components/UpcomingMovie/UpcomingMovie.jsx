@@ -17,9 +17,15 @@ import { getUpcomingMovies } from 'services/getMovies';
 import { StyledHeroContainer } from 'components/HomePageHero/HomePageHero.styled';
 import { Loader } from 'components/Loader/Loader';
 
-export const UpcomingMovie = () => {
+export const UpcomingMovie = ({
+  addToLibrary,
+  removeFromLibrary,
+  favoriteMovies,
+}) => {
+
   const [isLoading, setIsLoading] = useState(false);
   const [upcomingMovie, setMovie] = useState(null);
+
   useEffect(() => {
     const updateComponent = async () => {
       try {
@@ -36,6 +42,20 @@ export const UpcomingMovie = () => {
   }, []);
 
   const imagePath = 'https://image.tmdb.org/t/p/original/';
+  const isInLibrary =
+    favoriteMovies &&
+    upcomingMovie &&
+    favoriteMovies.some(favoriteMovie => favoriteMovie.id === upcomingMovie.id);
+
+  const handleClick = e => {
+    e.preventDefault();
+    addToLibrary(upcomingMovie);
+  };
+
+  const handleDelete = e => {
+    e.preventDefault();
+    removeFromLibrary(upcomingMovie.id);
+  };
 
   return (
     <section>
@@ -112,9 +132,18 @@ export const UpcomingMovie = () => {
                   {upcomingMovie.overview}
                 </StyledUpcomingContentText>
 
-                <StyledUpcomingContentBtn type="button">
-                  Add to my library
-                </StyledUpcomingContentBtn>
+                {isInLibrary ? (
+                  <StyledUpcomingContentBtn
+                    type="button"
+                    onClick={handleDelete}
+                  >
+                    Remove from library
+                  </StyledUpcomingContentBtn>
+                ) : (
+                  <StyledUpcomingContentBtn type="button" onClick={handleClick}>
+                    Add to my library
+                  </StyledUpcomingContentBtn>
+                )}
               </StyledUpcomingContentWrap>
             </StyledUpcomingFilm>
           </>

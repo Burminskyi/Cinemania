@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { StyledModal, StyledModalOverlay } from './ModalPage.styled';
+import { StyledCloseModalBtn, StyledModal, StyledModalOverlay } from './ModalPage.styled';
 import { ModalFilmDetails } from './ModalFilmDetails';
 import { CloseButton } from 'react-bootstrap';
 
@@ -38,8 +38,8 @@ export const Modal = ({
 
   return (
     <StyledModalOverlay onClick={onOverlayClick}>
-      <StyledModal>
-        <CloseButton />
+      <StyledModal id="Modal">
+        <StyledCloseModalBtn variant="white" onClick={onClose} />
         <ModalFilmDetails
           data={data}
           posterImage={posterImage}

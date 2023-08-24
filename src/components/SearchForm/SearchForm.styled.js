@@ -18,10 +18,10 @@ export const StyledSearchFormInput = styled.input`
   padding-left: 20px;
   width: 224px;
   height: 40px;
-  border: 1px solid var(--white);
+  border: 1px solid orange;
   border-radius: 8px;
   background: transparent;
-  color: var(--white);
+  color: inherit;
   &::placeholder {
     font-family: 'Roboto-500', sans-serif;
 

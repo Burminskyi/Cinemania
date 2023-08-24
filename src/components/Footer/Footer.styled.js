@@ -8,10 +8,6 @@ export const StyledFooterWrap = styled.div`
   height: 120px;
 `;
 
-export const StyledFooterText = styled.p`
-  color: white;
-`;
-
 export const StyledLink = styled.a`
   display: inline-block;
   color: #f87719;

@@ -1,4 +1,5 @@
 import { StyledUpcomingContentBtn } from 'components/UpcomingMovie/UpcomingMovie.styled';
+import { CloseButton } from 'react-bootstrap';
 import { styled } from 'styled-components';
 
 export const StyledModalOverlay = styled.div`
@@ -88,6 +89,7 @@ export const StyledFilmDetailsSection = styled.div`
 
 export const StyledFilmCaption = styled.p`
   height: 250px;
+  color: white;
   display: inline-block;
   margin-top: 20px !important;
   font-size: 14px;
@@ -107,6 +109,12 @@ export const StyledModalBtn = styled(StyledUpcomingContentBtn)`
   }
 `;
 
+export const StyledCloseModalBtn = styled(CloseButton)`
+  position: absolute;
+  right: 10px;
+  top: 5px;
+`;
+
 export const StyledTrailerFrame = styled.iframe`
   width: 100%;
   height: 100%;
@@ -118,10 +126,12 @@ export const StyledTrailerWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 10px;
   @media (min-width: 768px) {
     width: 640px;
     height: 360px;
-    padding-bottom: 20px;
   }
+`;
+
+export const StyledDetailsText = styled.div`
+  color: white;
 `;

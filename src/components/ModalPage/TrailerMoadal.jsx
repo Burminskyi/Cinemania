@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import {
+  StyledCloseModalBtn,
   StyledModal,
   StyledModalOverlay,
   StyledTrailerFrame,
   StyledTrailerWrap,
 } from './ModalPage.styled';
-import { CloseButton } from 'react-bootstrap';
 
 export const TrailerModal = ({ onClose, urlTrailer }) => {
   useEffect(() => {
@@ -29,8 +29,8 @@ export const TrailerModal = ({ onClose, urlTrailer }) => {
 
   return (
     <StyledModalOverlay onClick={onOverlayClick}>
-      <StyledModal>
-        <CloseButton />
+      <StyledModal id="Modal">
+        <StyledCloseModalBtn variant="white" onClick={onClose} />
         <StyledTrailerWrap>
           <StyledTrailerFrame
             src={urlTrailer}

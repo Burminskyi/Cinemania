@@ -54,3 +54,10 @@ export const StyledHeroBtn = styled(StyledUpcomingContentBtn)`
     font-size: 16px;
   }
 `;
+
+export const StyledMovieCaption = styled.p`
+  color: white;
+`;
+export const StyledHeroTitle = styled.h3`
+  color: white;
+`;

@@ -27,7 +27,11 @@ const Home = ({
         removeFromLibrary={removeFromLibrary}
         favoriteMovies={favoriteMovies}
       />
-      <UpcomingMovie />
+      <UpcomingMovie
+        addToLibrary={addToLibrary}
+        removeFromLibrary={removeFromLibrary}
+        favoriteMovies={favoriteMovies}
+      />
     </>
   );
 };

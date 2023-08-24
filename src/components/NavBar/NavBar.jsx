@@ -7,11 +7,14 @@ import {
   StyledNavbar,
   StyledNavbarBrand,
   StyledNavbarLogo,
+  StyledThemeSwitcher,
 } from './NavBar.styled';
+import { changeTheme } from 'services/themeSwitcher';
 
 const NavBar = () => {
+
   return (
-    <StyledNavbar collapseOnSelect expand="lg" variant="dark">
+    <StyledNavbar collapseOnSelect expand="lg">
       <Container>
         <NavLink to="/">
           <StyledNavbarBrand>
@@ -57,7 +60,8 @@ const NavBar = () => {
           </StyledNavList>
           <Nav>
             <Form>
-              <Form.Check
+              <StyledThemeSwitcher
+                onClick={changeTheme}
                 type="switch"
                 id="custom-switch"
                 label="Change theme"
