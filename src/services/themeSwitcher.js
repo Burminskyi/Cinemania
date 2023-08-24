@@ -1,4 +1,4 @@
-export const changeTheme = () => {
+export const setTheme = () => {
   if (localStorage.getItem('theme') === 'light') {
     localStorage.removeItem('theme');
   } else {

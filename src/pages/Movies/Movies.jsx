@@ -1,4 +1,4 @@
-import HomePageHero from 'components/HomePageHero/HomePageHero';
+import HomePageHero from 'components/Hero/Hero';
 import { MoviesList } from 'components/MoviesList/MoviesList';
 
 const Movies = ({

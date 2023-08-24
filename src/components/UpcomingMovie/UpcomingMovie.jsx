@@ -14,7 +14,7 @@ import {
   StyledUpcomingTitle,
 } from './UpcomingMovie.styled';
 import { getUpcomingMovies } from 'services/getMovies';
-import { StyledHeroContainer } from 'components/HomePageHero/HomePageHero.styled';
+import { StyledHeroContainer } from 'components/Hero/Hero.styled';
 import { Loader } from 'components/Loader/Loader';
 
 export const UpcomingMovie = ({

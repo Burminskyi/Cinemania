@@ -6,9 +6,7 @@ import {
 } from 'components/WeeklyTrends/WeeklyTrendsStyled';
 import { useEffect } from 'react';
 
-const {
-  default: HomePageHero,
-} = require('components/HomePageHero/HomePageHero');
+const { default: HomePageHero } = require('components/Hero/Hero');
 
 const Library = ({
   favoriteMovies,

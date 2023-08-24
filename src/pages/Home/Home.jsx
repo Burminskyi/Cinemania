@@ -1,4 +1,4 @@
-import HomePageHero from 'components/HomePageHero/HomePageHero';
+import HomePageHero from 'components/Hero/Hero';
 import { UpcomingMovie } from 'components/UpcomingMovie/UpcomingMovie';
 import WeeklyTrends from 'components/WeeklyTrends/WeeklyTrends';
 import { useEffect } from 'react';

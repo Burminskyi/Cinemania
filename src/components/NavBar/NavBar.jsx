@@ -10,7 +10,7 @@ import {
   StyledSwitcherWrap,
   StyledThemeSwitcher,
 } from './NavBar.styled';
-import { changeTheme } from 'services/themeSwitcher';
+import { setTheme } from 'services/themeSwitcher';
 
 const NavBar = () => {
   return (
@@ -61,7 +61,7 @@ const NavBar = () => {
           <StyledSwitcherWrap>
             <Form>
               <StyledThemeSwitcher
-                onClick={changeTheme}
+                onClick={setTheme}
                 type="switch"
                 id="custom-switch"
                 label="Change theme"

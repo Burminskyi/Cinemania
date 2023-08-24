@@ -8,13 +8,13 @@ import {
   StyledHeroSection,
   StyledHeroTitle,
   StyledMovieCaption,
-} from './HomePageHero.styled';
+} from './Hero.styled';
 import HeroRating from 'components/Rating/HeroRating';
 import { Modal } from 'components/ModalPage/Modal';
 import { TrailerModal } from 'components/ModalPage/TrailerMoadal';
 import { Loader } from 'components/Loader/Loader';
 
-const HomePageHero = ({ addToLibrary, removeFromLibrary, favoriteMovies }) => {
+const Hero = ({ addToLibrary, removeFromLibrary, favoriteMovies }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [trailerKey, setTrailerKey] = useState(null);
@@ -103,4 +103,4 @@ const HomePageHero = ({ addToLibrary, removeFromLibrary, favoriteMovies }) => {
   );
 };
 
-export default HomePageHero;
+export default Hero;
