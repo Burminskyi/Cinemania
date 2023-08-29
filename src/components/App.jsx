@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 import Library from 'pages/Library/Library';
 import { getWeeklyTrendingMovies } from 'services/getMovies';
-import { setTheme } from 'services/themeSwitcher';
+import { addThemeStyles } from 'services/themeSwitcher';
 
 const Home = lazy(() => import('pages/Home/Home'));
 const Movies = lazy(() => import('pages/Movies/Movies'));
@@ -17,9 +17,10 @@ export const App = () => {
     return JSON.parse(localStorage.getItem('favoriteMovies')) ?? [];
   });
 
-  setTheme();
+
 
   useEffect(() => {
+    addThemeStyles();
     const updateComponent = async () => {
       try {
         setIsTrendingMoviesLoading(true);

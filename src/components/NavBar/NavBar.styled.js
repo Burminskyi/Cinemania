@@ -10,6 +10,9 @@ export const StyledNavbarBrand = styled(NavbarBrand)`
   color: inherit;
   font-size: 32px;
   margin-right: 60px;
+  &:hover {
+    color: inherit;
+  }
 `;
 
 export const StyledNavbarLogo = styled.img`
@@ -53,3 +56,5 @@ export const StyledSwitcherWrap = styled(Nav)`
     margin-bottom: 20px;
   }
 `;
+
+
