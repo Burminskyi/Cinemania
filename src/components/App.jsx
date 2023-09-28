@@ -18,7 +18,6 @@ export const App = () => {
   });
 
 
-
   useEffect(() => {
     addThemeStyles();
     const updateComponent = async () => {
