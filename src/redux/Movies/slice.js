@@ -5,15 +5,24 @@ const initialState = {
   weeklyTrendingMovies: [],
   totalPages: 1,
   page: 1,
-//   favoriteMovies: JSON.parse(localStorage.getItem('favoriteMovies')) ?? [],
+  //   favoriteMovies: JSON.parse(localStorage.getItem('favoriteMovies')) ?? [],
 };
 
-const moviesSlice = createSlice({
+ const moviesSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    setFilter: (state, action) => {
-      state.filter = action.payload;
+    setIsTrendingMoviesLoading: (state, action) => {
+      state.isTrendingMoviesLoading = action.payload;
+    },
+    setWeeklyTrendingMovies: (state, action) => {
+      state.weeklyTrendingMovies = action.payload;
+    },
+    setTotalPages: (state, action) => {
+      state.totalPages = action.payload;
+    },
+    setPage: (state, action) => {
+      state.page = action.payload;
     },
   },
 
@@ -27,7 +36,6 @@ const moviesSlice = createSlice({
       .addCase()
       .addCase()
       .addCase()
-
       // -----------GET UPCOMING MOVIES-------------
       .addCase()
       .addCase()
@@ -46,6 +54,11 @@ const moviesSlice = createSlice({
       .addCase(),
 });
 
-export const { isTrendingMoviesLoading, weeklyTrendingMovies, totalPages, page } = moviesSlice.actions;
+export const {
+  setIsTrendingMoviesLoading,
+  setWeeklyTrendingMovies,
+  setTotalPages,
+  setPage,
+} = moviesSlice.actions;
 
-export default moviesSlice.reducer;
+export const moviesReducer = moviesSlice.reducer;
