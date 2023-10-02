@@ -46,6 +46,6 @@ const moviesSlice = createSlice({
       .addCase(),
 });
 
-// export const { isTrendingMoviesLoading, weeklyTrendingMovies, totalPages, page } = moviesSlice.actions;
+export const { isTrendingMoviesLoading, weeklyTrendingMovies, totalPages, page } = moviesSlice.actions;
 
-// export default moviesSlice.reducer;
+export default moviesSlice.reducer;
