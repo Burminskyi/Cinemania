@@ -17,7 +17,7 @@ import { moviesReducer } from './Movies/slice';
 const moviesPersistConfig = {
   key: 'movies',
   storage,
-  whitelist: ['token'],
+  whitelist: ['favoriteMovies'],
 };
 
 export const store = configureStore({

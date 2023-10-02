@@ -5,10 +5,10 @@ const initialState = {
   weeklyTrendingMovies: [],
   totalPages: 1,
   page: 1,
-  //   favoriteMovies: JSON.parse(localStorage.getItem('favoriteMovies')) ?? [],
+  favoriteMovies: [],
 };
 
- const moviesSlice = createSlice({
+const moviesSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
@@ -23,6 +23,9 @@ const initialState = {
     },
     setPage: (state, action) => {
       state.page = action.payload;
+    },
+    setFavoriteMovies: (state, action) => {
+      state.favoriteMovies = action.payload;
     },
   },
 
