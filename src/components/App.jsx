@@ -2,39 +2,45 @@ import { lazy, useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 import Library from 'pages/Library/Library';
-import { getWeeklyTrendingMovies } from 'services/getMovies';
+// import { getWeeklyTrendingMovies } from 'services/getMovies';
 import { addThemeStyles } from 'services/themeSwitcher';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchWeeklyTrendingMovies } from 'redux/Movies/slice';
 
 const Home = lazy(() => import('pages/Home/Home'));
 const Movies = lazy(() => import('pages/Movies/Movies'));
 
 export const App = () => {
-  const [isTrendingMoviesLoading, setIsTrendingMoviesLoading] = useState(false);
-  const [weeklyTrendingMovies, setWeeklyTrendingMovies] = useState([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [page, setPage] = useState(1);
+  const isLoading = useSelector(state => state.movies.isLoading);
+  const weeklyTrendingMovies = useSelector(
+    state => state.movies.weeklyTrendingMovies
+  );
+  const totalPages = useSelector(state => state.movies.totalPages);
+  const page = useSelector(state => state.movies.page);
   const [favoriteMovies, setFavoriteMovies] = useState(() => {
     return JSON.parse(localStorage.getItem('favoriteMovies')) ?? [];
   });
 
+  const dispatch = useDispatch();
 
   useEffect(() => {
     addThemeStyles();
-    const updateComponent = async () => {
-      try {
-        setIsTrendingMoviesLoading(true);
-        localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies));
-        const data = await getWeeklyTrendingMovies(page);
-        setTotalPages(data.total_pages);
-        setWeeklyTrendingMovies(data.results);
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setIsTrendingMoviesLoading(false);
-      }
-    };
-    updateComponent();
-  }, [favoriteMovies, page]);
+    dispatch(fetchWeeklyTrendingMovies(page));
+    // const updateComponent = async () => {
+    //   try {
+    //     setIsTrendingMoviesLoading(true);
+    //     localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies));
+    //     const data = await getWeeklyTrendingMovies(page);
+    //     setTotalPages(data.total_pages);
+    //     setWeeklyTrendingMovies(data.results);
+    //   } catch (error) {
+    //     console.log(error.message);
+    //   } finally {
+    //     setIsTrendingMoviesLoading(false);
+    //   }
+    // };
+    // updateComponent();
+  }, [dispatch, favoriteMovies, page]);
 
   const addToLibrary = data => {
     setFavoriteMovies(prev => [...prev, { ...data, id: data.id }]);
@@ -45,11 +51,11 @@ export const App = () => {
   };
 
   const handlePageChange = page => {
-    setPage(page);
+    // setPage(page);
   };
 
   const setTotalMoviesByNamePagesAmount = data => {
-    setTotalPages(data);
+    // setTotalPages(data);
   };
 
   return (
@@ -82,7 +88,7 @@ export const App = () => {
                 setTotalMoviesByNamePagesAmount={
                   setTotalMoviesByNamePagesAmount
                 }
-                isTrendingMoviesLoading={isTrendingMoviesLoading}
+                isTrendingMoviesLoading={isLoading}
               />
             }
           />
