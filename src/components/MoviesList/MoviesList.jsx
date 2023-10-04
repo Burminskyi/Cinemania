@@ -5,29 +5,35 @@ import {
   StyledCatalogList,
 } from 'components/WeeklyTrends/WeeklyTrendsStyled';
 import { StyledMoviesList } from './MoviesList.styled';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getMoviesByName } from 'services/getMovies';
 import { useSearchParams } from 'react-router-dom';
 import { MyPagination } from 'components/Pagination/Pagination';
 import { Loader } from 'components/Loader/Loader';
+import { setPage } from 'redux/Movies/slice';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const MoviesList = ({
-  weeklyTrendingMovies,
-  addToLibrary,
-  removeFromLibrary,
-  favoriteMovies,
-  totalPages,
   currentPage,
-  onChangePage,
   setTotalMoviesByNamePagesAmount,
-  isTrendingMoviesLoading,
 }) => {
+  const totalPages = useSelector(state => state.movies.totalPages);
+
   const amountOfPages = totalPages < 500 ? totalPages : 500;
   const componentRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState(null);
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+  const weeklyTrendingMovies = useSelector(
+    state => state.movies.weeklyTrendingMovies
+  );
+
+  const dispatch = useDispatch();
+
+  const handlePageChange = useCallback(page => {
+    dispatch(setPage(page));
+  });
 
   useEffect(() => {
     if (componentRef.current) {
@@ -40,14 +46,14 @@ export const MoviesList = ({
     const page = searchParams.get('page');
     if (page >= amountOfPages && query !== null) {
       setSearchParams({ query, page: amountOfPages });
-      onChangePage(amountOfPages);
+      handlePageChange(amountOfPages);
     }
     if (page >= amountOfPages && query === null) {
       setSearchParams({ page: amountOfPages });
-      onChangePage(amountOfPages);
+      handlePageChange(amountOfPages);
     }
     if (page) {
-      onChangePage(page);
+      handlePageChange(page);
     }
 
     const fetchMoviesByQuery = async () => {
@@ -68,7 +74,7 @@ export const MoviesList = ({
   }, [
     amountOfPages,
     currentPage,
-    onChangePage,
+    handlePageChange,
     query,
     searchParams,
     setSearchParams,
@@ -84,7 +90,7 @@ export const MoviesList = ({
       return;
     }
 
-    onChangePage(1);
+    handlePageChange(1);
     setSearchParams({ query, page: 1 });
   };
 
@@ -92,29 +98,17 @@ export const MoviesList = ({
     <StyledMoviesList ref={componentRef}>
       <StyledCatalogContainer>
         <SearchForm handleSubmit={handleSubmit} />
-        {isLoading || isTrendingMoviesLoading ? (
+        {isLoading ? (
           <Loader />
         ) : (
           <>
             <StyledCatalogList>
               {movies.length
                 ? movies.map(movie => (
-                    <MoviesGalleryItem
-                      key={movie.id}
-                      movie={movie}
-                      addToLibrary={addToLibrary}
-                      removeFromLibrary={removeFromLibrary}
-                      favoriteMovies={favoriteMovies}
-                    />
+                    <MoviesGalleryItem key={movie.id} movie={movie} />
                   ))
                 : weeklyTrendingMovies.map(movie => (
-                    <MoviesGalleryItem
-                      key={movie.id}
-                      movie={movie}
-                      addToLibrary={addToLibrary}
-                      removeFromLibrary={removeFromLibrary}
-                      favoriteMovies={favoriteMovies}
-                    />
+                    <MoviesGalleryItem key={movie.id} movie={movie} />
                   ))}
             </StyledCatalogList>
 
@@ -122,7 +116,7 @@ export const MoviesList = ({
               <MyPagination
                 totalPages={totalPages}
                 currentPage={currentPage}
-                onChangePage={onChangePage}
+                onChangePage={handlePageChange}
                 setSearchParams={setSearchParams}
                 query={query}
               />

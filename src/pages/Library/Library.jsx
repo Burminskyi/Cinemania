@@ -5,36 +5,26 @@ import {
   StyledCatalogList,
 } from 'components/WeeklyTrends/WeeklyTrendsStyled';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const { default: HomePageHero } = require('components/Hero/Hero');
 
 const Library = ({
-  favoriteMovies,
-  addToLibrary,
-  removeFromLibrary,
   onChangePage,
 }) => {
+  const favoriteMovies = useSelector(state => state.movies.favoriteMovies);
+
   useEffect(() => {
     onChangePage(1);
   }, [onChangePage]);
   return (
     <>
-      <HomePageHero
-        addToLibrary={addToLibrary}
-        removeFromLibrary={removeFromLibrary}
-        favoriteMovies={favoriteMovies}
-      />
+      <HomePageHero />
       <StyledCatalogContainer>
         {favoriteMovies.length ? (
           <StyledCatalogList>
             {favoriteMovies.map(movie => (
-              <MoviesGalleryItem
-                key={movie.id}
-                movie={movie}
-                addToLibrary={addToLibrary}
-                removeFromLibrary={removeFromLibrary}
-                favoriteMovies={favoriteMovies}
-              />
+              <MoviesGalleryItem key={movie.id} movie={movie} />
             ))}
           </StyledCatalogList>
         ) : (

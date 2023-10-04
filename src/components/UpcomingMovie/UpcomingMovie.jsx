@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   StyledUpcomingContentBtn,
   StyledUpcomingContentText,
@@ -13,38 +13,39 @@ import {
   StyledUpcomingThumb,
   StyledUpcomingTitle,
 } from './UpcomingMovie.styled';
-import { getUpcomingMovies } from 'services/getMovies';
 import { StyledHeroContainer } from 'components/Hero/Hero.styled';
 import { Loader } from 'components/Loader/Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetctUpcomingMovies,
+  removeFromFavoriteMovies,
+  setFavoriteMovies,
+} from 'redux/Movies/slice';
 
-export const UpcomingMovie = ({
-  addToLibrary,
-  removeFromLibrary,
-  favoriteMovies,
-}) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [upcomingMovie, setMovie] = useState(null);
+export const UpcomingMovie = () => {
+  const isLoading = useSelector(state => state.movies.isLoading);
+  const upcomingMovie = useSelector(state => state.movies.upcomingMovie);
+  const favoriteMovies = useSelector(state => state.movies.favoriteMovies);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const updateComponent = async () => {
-      try {
-        setIsLoading(true);
-        const data = await getUpcomingMovies();
-        setMovie(data.results[0]);
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    updateComponent();
-  }, []);
+    dispatch(fetctUpcomingMovies());
+  }, [dispatch]);
 
   const imagePath = 'https://image.tmdb.org/t/p/original/';
   const isInLibrary =
     favoriteMovies &&
     upcomingMovie &&
     favoriteMovies.some(favoriteMovie => favoriteMovie.id === upcomingMovie.id);
+
+  const addToLibrary = data => {
+    dispatch(setFavoriteMovies(data));
+  };
+
+  const removeFromLibrary = id => {
+    dispatch(removeFromFavoriteMovies(id));
+  };
 
   const handleClick = e => {
     e.preventDefault();

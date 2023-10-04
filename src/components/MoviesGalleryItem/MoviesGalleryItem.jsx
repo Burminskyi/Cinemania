@@ -12,12 +12,7 @@ import Rating from 'components/Rating/Rating';
 import { getMoviesById } from 'services/getMovies';
 import { Modal } from 'components/ModalPage/Modal';
 
-export const MoviesGalleryItem = ({
-  movie,
-  addToLibrary,
-  removeFromLibrary,
-  favoriteMovies,
-}) => {
+export const MoviesGalleryItem = ({ movie }) => {
   const { poster_path, original_title, release_date, vote_average, id } = movie;
   const [isLoaded, setIsLoaded] = useState(false);
   const [movieGenres, setMovieGenres] = useState([]);
@@ -78,13 +73,7 @@ export const MoviesGalleryItem = ({
         <Rating rating={vote_average} />
       </StyledCatalogItem>
       {showModal && (
-        <Modal
-          data={movie}
-          onClose={onModal}
-          addToLibrary={addToLibrary}
-          removeFromLibrary={removeFromLibrary}
-          favoriteMovies={favoriteMovies}
-        />
+        <Modal data={movie} onClose={onModal} />
       )}
     </>
   );

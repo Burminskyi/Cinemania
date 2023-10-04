@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getWeeklyTrendingMovies } from 'services/getMovies';
+import { getUpcomingMovies, getWeeklyTrendingMovies } from 'services/getMovies';
 
 export const fetchWeeklyTrendingMovies = createAsyncThunk(
   'movies/fetchWeeklyTrendingMovies',
@@ -13,9 +13,22 @@ export const fetchWeeklyTrendingMovies = createAsyncThunk(
   }
 );
 
+export const fetctUpcomingMovies = createAsyncThunk(
+  'movies/fetctUpcomingMovies',
+  async (_, thunkApi) => {
+    try {
+      const data = await getUpcomingMovies();
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
 const initialState = {
   isLoading: false,
   weeklyTrendingMovies: [],
+  upcomingMovie: null,
   totalPages: 1,
   page: 1,
   favoriteMovies: [],
@@ -39,7 +52,12 @@ const moviesSlice = createSlice({
       state.page = action.payload;
     },
     setFavoriteMovies: (state, action) => {
-      state.favoriteMovies = action.payload;
+      state.favoriteMovies.push(action.payload);
+    },
+    removeFromFavoriteMovies: (state, action) => {
+      state.favoriteMovies = state.favoriteMovies.filter(
+        movie => movie.id !== action.payload
+      );
     },
   },
 
@@ -54,9 +72,17 @@ const moviesSlice = createSlice({
       //   .addCase()
       //   .addCase()
       //   // -----------GET UPCOMING MOVIES-------------
-      //   .addCase()
-      //   .addCase()
-      //   .addCase()
+      .addCase(fetctUpcomingMovies.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(fetctUpcomingMovies.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.upcomingMovie = action.payload.results[0];
+      })
+      .addCase(fetctUpcomingMovies.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
       // -----------GET WEEKLY TRENDING MOVIES-------------
       .addCase(fetchWeeklyTrendingMovies.pending, (state, action) => {
         state.isLoading = true;
@@ -80,11 +106,7 @@ const moviesSlice = createSlice({
   //   .addCase(),
 });
 
-export const {
-  setIsTrendingMoviesLoading,
-  setWeeklyTrendingMovies,
-  setTotalPages,
-  setPage,
-} = moviesSlice.actions;
+export const { setPage, setFavoriteMovies, removeFromFavoriteMovies } =
+  moviesSlice.actions;
 
 export const moviesReducer = moviesSlice.reducer;

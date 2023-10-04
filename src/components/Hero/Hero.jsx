@@ -14,7 +14,7 @@ import { Modal } from 'components/ModalPage/Modal';
 import { TrailerModal } from 'components/ModalPage/TrailerMoadal';
 import { Loader } from 'components/Loader/Loader';
 
-const Hero = ({ addToLibrary, removeFromLibrary, favoriteMovies }) => {
+const Hero = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [trailerKey, setTrailerKey] = useState(null);
@@ -89,9 +89,6 @@ const Hero = ({ addToLibrary, removeFromLibrary, favoriteMovies }) => {
             <Modal
               data={trendingMovie}
               onClose={onModal}
-              addToLibrary={addToLibrary}
-              removeFromLibrary={removeFromLibrary}
-              favoriteMovies={favoriteMovies}
             />
           )}
           {showTrailerModal && (

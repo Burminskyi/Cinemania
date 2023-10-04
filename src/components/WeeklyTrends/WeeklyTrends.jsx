@@ -7,22 +7,23 @@ import {
   StyledWeeklyTrendsHeader,
 } from './WeeklyTrendsStyled';
 import { Loader } from 'components/Loader/Loader';
+import { useSelector } from 'react-redux';
 
-const WeeklyTrends = ({
-  weeklyTrendingMovies,
-  addToLibrary,
-  removeFromLibrary,
-  favoriteMovies,
-}) => {
+const WeeklyTrends = () => {
+    const weeklyTrendingMovies = useSelector(
+      state => state.movies.weeklyTrendingMovies
+    );
   const [isLoading, setIsLoading] = useState(false);
-  const [slicedWeeklyTrendingMovies, setweeklyTrendingMovies] = useState([]);
+  const [slicedWeeklyTrendingMovies, setSlicedWeeklyTrendingMovies] = useState(
+    []
+  );
 
   useEffect(() => {
     const updateComponent = async () => {
       setIsLoading(true);
       try {
         const slicedData = weeklyTrendingMovies.slice(0, 3);
-        setweeklyTrendingMovies(slicedData);
+        setSlicedWeeklyTrendingMovies(slicedData);
       } catch (error) {
         console.log(error.message);
       } finally {
@@ -47,9 +48,6 @@ const WeeklyTrends = ({
               <MoviesGalleryItem
                 key={movie.id}
                 movie={movie}
-                addToLibrary={addToLibrary}
-                removeFromLibrary={removeFromLibrary}
-                favoriteMovies={favoriteMovies}
               />
             ))}
           </StyledCatalogList>

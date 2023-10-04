@@ -9,9 +9,6 @@ import { ModalFilmDetails } from './ModalFilmDetails';
 export const Modal = ({
   data,
   onClose,
-  addToLibrary,
-  removeFromLibrary,
-  favoriteMovies,
 }) => {
   useEffect(() => {
     const keyDown = e => {
@@ -44,9 +41,6 @@ export const Modal = ({
         <ModalFilmDetails
           data={data}
           posterImage={posterImage}
-          addToLibrary={addToLibrary}
-          removeFromLibrary={removeFromLibrary}
-          favoriteMovies={favoriteMovies}
         />
       </StyledModal>
     </StyledModalOverlay>

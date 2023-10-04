@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from 'react-redux';
 import {
   StyledDetailsText,
   StyledFilmCaption,
@@ -9,14 +10,23 @@ import {
   StyledFilmDetailsWrap,
   StyledModalBtn,
 } from './ModalPage.styled';
+import {
+  removeFromFavoriteMovies,
+  setFavoriteMovies,
+} from 'redux/Movies/slice';
 
-export const ModalFilmDetails = ({
-  data,
-  posterImage,
-  addToLibrary,
-  removeFromLibrary,
-  favoriteMovies,
-}) => {
+export const ModalFilmDetails = ({ data, posterImage }) => {
+  const favoriteMovies = useSelector(state => state.movies.favoriteMovies);
+  const dispatch = useDispatch();
+
+  const addToLibrary = data => {
+    dispatch(setFavoriteMovies(data));
+  };
+
+  const removeFromLibrary = id => {
+    dispatch(removeFromFavoriteMovies(id));
+  };
+
   const handleClick = e => {
     e.preventDefault();
     addToLibrary(data);
