@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import {
   StyledCatalogItem,
   StyledFilmInfo,
@@ -8,9 +9,11 @@ import {
   StyledPhotoCard,
   StyledPhotoCardImage,
 } from './MoviesGalleryItem.styled';
+
 import Rating from 'components/Rating/Rating';
-import { getMoviesById } from 'services/getMovies';
 import { Modal } from 'components/ModalPage/Modal';
+
+import { getMoviesById } from 'services/getMovies';
 
 export const MoviesGalleryItem = ({ movie }) => {
   const { poster_path, original_title, release_date, vote_average, id } = movie;
@@ -72,9 +75,7 @@ export const MoviesGalleryItem = ({ movie }) => {
         </StyledPhotoCard>
         <Rating rating={vote_average} />
       </StyledCatalogItem>
-      {showModal && (
-        <Modal data={movie} onClose={onModal} />
-      )}
+      {showModal && <Modal data={movie} onClose={onModal} />}
     </>
   );
 };

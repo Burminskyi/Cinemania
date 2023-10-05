@@ -1,5 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getUpcomingMovies, getWeeklyTrendingMovies } from 'services/getMovies';
+
+import {
+  getMoviesById,
+  getMoviesByName,
+  getTrailer,
+  getTrendingMovies,
+  getUpcomingMovies,
+  getWeeklyTrendingMovies,
+} from 'services/getMovies';
 
 export const fetchWeeklyTrendingMovies = createAsyncThunk(
   'movies/fetchWeeklyTrendingMovies',
@@ -25,29 +33,74 @@ export const fetctUpcomingMovies = createAsyncThunk(
   }
 );
 
+export const fetchTrendingMoviesOfTheDay = createAsyncThunk(
+  'movies/fetchTrendingMoviesOfTheDay',
+  async (_, thunkApi) => {
+    try {
+      const data = await getTrendingMovies();
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchTrailer = createAsyncThunk(
+  'movies/fetchTrailer',
+  async (id, thunkApi) => {
+    try {
+      const data = await getTrailer(id);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchMoviesByName = createAsyncThunk(
+  'movies/fetchMoviesByName',
+  async (params, thunkApi) => {
+    const { query, page } = params;
+    if (!query) return;
+    try {
+      const data = await getMoviesByName(query, page);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+// export const fetchGenres = createAsyncThunk(
+//   'movies/fetchGenres',
+//   async (id, thunkApi) => {
+//     try {
+//       const data = await getMoviesById(id);
+//       return data;
+//     } catch (error) {
+//       return thunkApi.rejectWithValue(error.message);
+//     }
+//   }
+// );
+
 const initialState = {
   isLoading: false,
   weeklyTrendingMovies: [],
+  requestedMovies: [],
+  trendingMovie: null,
   upcomingMovie: null,
   totalPages: 1,
   page: 1,
   favoriteMovies: [],
   error: null,
+  trailerURL: null,
+  // movieGenres: [],
 };
 
 const moviesSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    // isLoading: (state, action) => {
-    //   state.isLoading = action.payload;
-    // },
-    // setWeeklyTrendingMovies: (state, action) => {
-    //   state.weeklyTrendingMovies = action.payload;
-    // },
-    // setTotalPages: (state, action) => {
-    //   state.totalPages = action.payload;
-    // },
     setPage: (state, action) => {
       state.page = action.payload;
     },
@@ -63,14 +116,37 @@ const moviesSlice = createSlice({
 
   extraReducers: builder =>
     builder
-      // -----------GET TRENDING MOVIES-------------
-      //   .addCase()
-      //   .addCase()
-      //   .addCase()
+      // -----------GET DAILY TRENDING MOVIES-------------
+      .addCase(fetchTrendingMoviesOfTheDay.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchTrendingMoviesOfTheDay.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const movies = action.payload.results;
+        const randomIndex = Math.floor(Math.random() * movies.length);
+        const randomMovie = movies[randomIndex];
+        state.trendingMovie = randomMovie;
+      })
+      .addCase(fetchTrendingMoviesOfTheDay.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
       //   // -----------GET TRAILER-------------
-      //   .addCase()
-      //   .addCase()
-      //   .addCase()
+      .addCase(fetchTrailer.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchTrailer.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const { key } = action.payload.results.find(
+          item => item.name === 'Official Trailer'
+        );
+        if (!key) throw new Error('No data!');
+        state.trailerURL = `https://www.youtube.com/embed/${key}`;
+      })
+      .addCase(fetchTrailer.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
       //   // -----------GET UPCOMING MOVIES-------------
       .addCase(fetctUpcomingMovies.pending, (state, action) => {
         state.isLoading = true;
@@ -95,15 +171,35 @@ const moviesSlice = createSlice({
       .addCase(fetchWeeklyTrendingMovies.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      //   // -----------GET MOVIE GENRES-------------
+      // .addCase(fetchGenres.pending, (state, action) => {
+      //   state.isLoading = true;
+      // })
+      // .addCase(fetchGenres.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   const { genres } = action.payload;
+      //   if (!genres) state.movieGenres = [];
+      //   else state.movieGenres = genres.map(obj => obj.name).join(', ');
+      // })
+      // .addCase(fetchGenres.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.error = action.payload;
+      // }),
+      //   // -----------GET MOVIES BY NAME-------------
+      .addCase(fetchMoviesByName.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchMoviesByName.fulfilled, (state, action) => {
+        state.isLoading = false;
+        if (!action.payload) return;
+        state.requestedMovies = action.payload.results;
+        state.totalPages = action.payload.total_pages;
+      })
+      .addCase(fetchMoviesByName.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       }),
-  //   // -----------GET MOVIES BY ID-------------
-  //   .addCase()
-  //   .addCase()
-  //   .addCase()
-  //   // -----------GET MOVIES BY Name-------------
-  //   .addCase()
-  //   .addCase()
-  //   .addCase(),
 });
 
 export const { setPage, setFavoriteMovies, removeFromFavoriteMovies } =

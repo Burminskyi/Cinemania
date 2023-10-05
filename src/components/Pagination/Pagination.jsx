@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+
 import {
   StyledPagination,
   StyledPaginationItem,
@@ -7,13 +9,14 @@ import {
 
 export const MyPagination = ({
   totalPages,
-  currentPage,
   onChangePage,
   setSearchParams,
   query,
 }) => {
   let items = [];
   const amountOfPages = totalPages < 500 ? totalPages : 500;
+  const page = useSelector(state => state.movies.page);
+  const currentPage = Number(page);
 
   if (currentPage > 1) {
     items.push(

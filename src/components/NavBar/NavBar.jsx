@@ -1,6 +1,6 @@
 import { Navbar, Container, Form } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import logo from './header-logo.svg';
+
 import {
   StyledNavLink,
   StyledNavList,
@@ -10,7 +10,10 @@ import {
   StyledSwitcherWrap,
   StyledThemeSwitcher,
 } from './NavBar.styled';
+
 import { setTheme } from 'services/themeSwitcher';
+
+import logo from './header-logo.svg';
 
 const NavBar = () => {
   return (

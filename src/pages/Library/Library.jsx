@@ -1,22 +1,23 @@
-import { MoviesGalleryItem } from 'components/MoviesGalleryItem/MoviesGalleryItem';
-import { LibraryNotification } from 'components/Notifications/LibraryNotification';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
 import {
   StyledCatalogContainer,
   StyledCatalogList,
 } from 'components/WeeklyTrends/WeeklyTrendsStyled';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+
+import { MoviesGalleryItem } from 'components/MoviesGalleryItem/MoviesGalleryItem';
+import { LibraryNotification } from 'components/Notifications/LibraryNotification';
 
 const { default: HomePageHero } = require('components/Hero/Hero');
 
-const Library = ({
-  onChangePage,
-}) => {
+const Library = ({ onChangePage }) => {
   const favoriteMovies = useSelector(state => state.movies.favoriteMovies);
 
   useEffect(() => {
     onChangePage(1);
   }, [onChangePage]);
+
   return (
     <>
       <HomePageHero />

@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
+
 import {
   StyledCloseModalBtn,
   StyledModal,
   StyledModalOverlay,
 } from './ModalPage.styled';
+
 import { ModalFilmDetails } from './ModalFilmDetails';
 
-export const Modal = ({
-  data,
-  onClose,
-}) => {
+export const Modal = ({ data, onClose }) => {
   useEffect(() => {
     const keyDown = e => {
       if (e.code === 'Escape') {
@@ -38,10 +37,7 @@ export const Modal = ({
     <StyledModalOverlay onClick={onOverlayClick}>
       <StyledModal id="Modal">
         <StyledCloseModalBtn variant="white" onClick={onClose} />
-        <ModalFilmDetails
-          data={data}
-          posterImage={posterImage}
-        />
+        <ModalFilmDetails data={data} posterImage={posterImage} />
       </StyledModal>
     </StyledModalOverlay>
   );

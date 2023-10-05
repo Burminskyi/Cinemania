@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   StyledUpcomingContentBtn,
   StyledUpcomingContentText,
@@ -14,8 +16,9 @@ import {
   StyledUpcomingTitle,
 } from './UpcomingMovie.styled';
 import { StyledHeroContainer } from 'components/Hero/Hero.styled';
+
 import { Loader } from 'components/Loader/Loader';
-import { useDispatch, useSelector } from 'react-redux';
+
 import {
   fetctUpcomingMovies,
   removeFromFavoriteMovies,

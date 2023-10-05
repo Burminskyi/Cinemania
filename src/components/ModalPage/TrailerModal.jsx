@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   StyledCloseModalBtn,
   StyledModal,
@@ -7,8 +9,16 @@ import {
   StyledTrailerWrap,
 } from './ModalPage.styled';
 
-export const TrailerModal = ({ onClose, urlTrailer }) => {
+import { fetchTrailer } from 'redux/Movies/slice';
+
+export const TrailerModal = ({ onClose, trailerID }) => {
+  const trailerURL = useSelector(state => state.movies.trailerURL);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
+    dispatch(fetchTrailer(trailerID));
+
     const keyDown = e => {
       if (e.code === 'Escape') {
         onClose();
@@ -19,7 +29,7 @@ export const TrailerModal = ({ onClose, urlTrailer }) => {
     return () => {
       window.removeEventListener('keydown', keyDown);
     };
-  }, [onClose]);
+  }, [dispatch, onClose, trailerID]);
 
   const onOverlayClick = e => {
     if (e.currentTarget === e.target) {
@@ -33,7 +43,7 @@ export const TrailerModal = ({ onClose, urlTrailer }) => {
         <StyledCloseModalBtn variant="white" onClick={onClose} />
         <StyledTrailerWrap>
           <StyledTrailerFrame
-            src={urlTrailer}
+            src={trailerURL}
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

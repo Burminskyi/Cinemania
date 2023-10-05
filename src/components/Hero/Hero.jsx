@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getTrailer, getTrendingMovies } from 'services/getMovies';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   StyledHeroBtn,
   StyledHeroBtnWrap,
@@ -9,42 +10,26 @@ import {
   StyledHeroTitle,
   StyledMovieCaption,
 } from './Hero.styled';
+
 import HeroRating from 'components/Rating/HeroRating';
 import { Modal } from 'components/ModalPage/Modal';
-import { TrailerModal } from 'components/ModalPage/TrailerMoadal';
+import { TrailerModal } from 'components/ModalPage/TrailerModal';
 import { Loader } from 'components/Loader/Loader';
 
+import { fetchTrendingMoviesOfTheDay } from 'redux/Movies/slice';
+
 const Hero = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoading = useSelector(state => state.movies.isLoading);
+  const trendingMovie = useSelector(state => state.movies.trendingMovie);
+
   const [showModal, setShowModal] = useState(false);
-  const [trailerKey, setTrailerKey] = useState(null);
   const [showTrailerModal, setShowTrailerModal] = useState(false);
-  const [trendingMovie, setTrendingMovie] = useState(null);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const updateComponent = async () => {
-      try {
-        setIsLoading(true);
-        const data = await getTrendingMovies();
-        const movies = data.results;
-        const randomIndex = Math.floor(Math.random() * movies.length);
-        const randomMovie = movies[randomIndex];
-        setTrendingMovie(randomMovie);
-
-        const trailerData = await getTrailer(randomMovie.id);
-        const filmTrailerArr = trailerData.results;
-        const trailer = filmTrailerArr.find(e => e.name === 'Official Trailer');
-        const { key } = trailer;
-        if (!key || filmTrailerArr.length === 0) throw new Error('No data!');
-        setTrailerKey(key);
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    updateComponent();
-  }, []);
+    dispatch(fetchTrendingMoviesOfTheDay());
+  }, [dispatch]);
 
   const onModal = () => {
     setShowModal(prev => !prev);
@@ -54,7 +39,6 @@ const Hero = () => {
   };
 
   const imagePath = 'https://image.tmdb.org/t/p/original/';
-  const urlTrailer = `https://www.youtube.com/embed/${trailerKey}`;
 
   return (
     <StyledHeroSection>
@@ -85,14 +69,12 @@ const Hero = () => {
               </StyledHeroBtnWrap>
             </StyledHeroInfoWrap>
           </StyledHeroContainer>
-          {showModal && (
-            <Modal
-              data={trendingMovie}
-              onClose={onModal}
-            />
-          )}
+          {showModal && <Modal data={trendingMovie} onClose={onModal} />}
           {showTrailerModal && (
-            <TrailerModal onClose={onTrailerModal} urlTrailer={urlTrailer} />
+            <TrailerModal
+              onClose={onTrailerModal}
+              trailerID={trendingMovie.id}
+            />
           )}
         </>
       )}

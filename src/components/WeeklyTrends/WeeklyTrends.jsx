@@ -1,36 +1,28 @@
-import { MoviesGalleryItem } from 'components/MoviesGalleryItem/MoviesGalleryItem';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import {
   StyledCatalogContainer,
   StyledCatalogList,
   StyledWeeklyTrendsHeader,
 } from './WeeklyTrendsStyled';
+
 import { Loader } from 'components/Loader/Loader';
-import { useSelector } from 'react-redux';
+import { MoviesGalleryItem } from 'components/MoviesGalleryItem/MoviesGalleryItem';
 
 const WeeklyTrends = () => {
-    const weeklyTrendingMovies = useSelector(
-      state => state.movies.weeklyTrendingMovies
-    );
-  const [isLoading, setIsLoading] = useState(false);
+  const weeklyTrendingMovies = useSelector(
+    state => state.movies.weeklyTrendingMovies
+  );
+  const isLoading = useSelector(state => state.movies.isLoading);
+
   const [slicedWeeklyTrendingMovies, setSlicedWeeklyTrendingMovies] = useState(
     []
   );
 
   useEffect(() => {
-    const updateComponent = async () => {
-      setIsLoading(true);
-      try {
-        const slicedData = weeklyTrendingMovies.slice(0, 3);
-        setSlicedWeeklyTrendingMovies(slicedData);
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    updateComponent();
+    setSlicedWeeklyTrendingMovies(weeklyTrendingMovies.slice(0, 3));
   }, [weeklyTrendingMovies]);
 
   return (
@@ -45,10 +37,7 @@ const WeeklyTrends = () => {
         ) : (
           <StyledCatalogList>
             {slicedWeeklyTrendingMovies.map(movie => (
-              <MoviesGalleryItem
-                key={movie.id}
-                movie={movie}
-              />
+              <MoviesGalleryItem key={movie.id} movie={movie} />
             ))}
           </StyledCatalogList>
         )}

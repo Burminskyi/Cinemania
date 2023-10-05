@@ -1,85 +1,63 @@
+import { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { fetchMoviesByName, setPage } from 'redux/Movies/slice';
+
 import { MoviesGalleryItem } from 'components/MoviesGalleryItem/MoviesGalleryItem';
 import { SearchForm } from 'components/SearchForm/SearchForm';
+import { MyPagination } from 'components/Pagination/Pagination';
+import { Loader } from 'components/Loader/Loader';
+
 import {
   StyledCatalogContainer,
   StyledCatalogList,
 } from 'components/WeeklyTrends/WeeklyTrendsStyled';
 import { StyledMoviesList } from './MoviesList.styled';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { getMoviesByName } from 'services/getMovies';
-import { useSearchParams } from 'react-router-dom';
-import { MyPagination } from 'components/Pagination/Pagination';
-import { Loader } from 'components/Loader/Loader';
-import { setPage } from 'redux/Movies/slice';
-import { useDispatch, useSelector } from 'react-redux';
 
-export const MoviesList = ({
-  currentPage,
-  setTotalMoviesByNamePagesAmount,
-}) => {
+export const MoviesList = () => {
   const totalPages = useSelector(state => state.movies.totalPages);
-
-  const amountOfPages = totalPages < 500 ? totalPages : 500;
-  const componentRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [query, setQuery] = useState(null);
-  const [movies, setMovies] = useState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const isLoading = useSelector(state => state.movies.isLoading);
+  const requestedMovies = useSelector(state => state.movies.requestedMovies);
   const weeklyTrendingMovies = useSelector(
     state => state.movies.weeklyTrendingMovies
   );
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const componentRef = useRef(null);
+
+  const [query, setQuery] = useState(null);
 
   const dispatch = useDispatch();
 
-  const handlePageChange = useCallback(page => {
-    dispatch(setPage(page));
-  });
+  const amountOfPages = totalPages < 500 ? totalPages : 500;
 
   useEffect(() => {
     if (componentRef.current) {
       componentRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-    // window.scrollTo({ top: 800, behavior: 'smooth' });
 
+    const page = searchParams.get('page');
     const query = searchParams.get('query');
     setQuery(query);
-    const page = searchParams.get('page');
+
     if (page >= amountOfPages && query !== null) {
       setSearchParams({ query, page: amountOfPages });
-      handlePageChange(amountOfPages);
     }
     if (page >= amountOfPages && query === null) {
       setSearchParams({ page: amountOfPages });
-      handlePageChange(amountOfPages);
-    }
-    if (page) {
-      handlePageChange(page);
     }
 
-    const fetchMoviesByQuery = async () => {
-      try {
-        setIsLoading(true);
-
-        if (!query) return;
-        const data = await getMoviesByName(query, page ? page : 1);
-        setTotalMoviesByNamePagesAmount(data.total_pages);
-        setMovies(data.results);
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setIsLoading(false);
-      }
+    const params = {
+      query,
+      page,
     };
-    fetchMoviesByQuery();
-  }, [
-    amountOfPages,
-    currentPage,
-    handlePageChange,
-    query,
-    searchParams,
-    setSearchParams,
-    setTotalMoviesByNamePagesAmount,
-  ]);
+    dispatch(fetchMoviesByName(params));
+  }, [amountOfPages, dispatch, query, searchParams, setSearchParams]);
+
+  const handlePageChange = page => {
+    dispatch(setPage(page));
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -103,8 +81,8 @@ export const MoviesList = ({
         ) : (
           <>
             <StyledCatalogList>
-              {movies.length
-                ? movies.map(movie => (
+              {requestedMovies && requestedMovies.length
+                ? requestedMovies.map(movie => (
                     <MoviesGalleryItem key={movie.id} movie={movie} />
                   ))
                 : weeklyTrendingMovies.map(movie => (
@@ -115,7 +93,6 @@ export const MoviesList = ({
             {!isLoading && totalPages > 1 && (
               <MyPagination
                 totalPages={totalPages}
-                currentPage={currentPage}
                 onChangePage={handlePageChange}
                 setSearchParams={setSearchParams}
                 query={query}

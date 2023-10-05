@@ -1,9 +1,12 @@
 import { lazy, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { SharedLayout } from './SharedLayout/SharedLayout';
 import Library from 'pages/Library/Library';
+
 import { addThemeStyles } from 'services/themeSwitcher';
-import { useDispatch, useSelector } from 'react-redux';
+
 import { fetchWeeklyTrendingMovies, setPage } from 'redux/Movies/slice';
 
 const Home = lazy(() => import('pages/Home/Home'));
@@ -20,11 +23,7 @@ export const App = () => {
   }, [dispatch, page]);
 
   const handlePageChange = page => {
-    setPage(page);
-  };
-
-  const setTotalMoviesByNamePagesAmount = data => {
-    // setTotalPages(data);
+    dispatch(setPage(page));
   };
 
   return (
@@ -32,18 +31,7 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home onChangePage={handlePageChange} />} />
-          <Route
-            path="catalog"
-            element={
-              <Movies
-                currentPage={Number(page)}
-                onChangePage={handlePageChange}
-                setTotalMoviesByNamePagesAmount={
-                  setTotalMoviesByNamePagesAmount
-                }
-              />
-            }
-          />
+          <Route path="catalog" element={<Movies />} />
           <Route
             path="library"
             element={<Library onChangePage={handlePageChange} />}
