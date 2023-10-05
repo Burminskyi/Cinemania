@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import {
-  getMoviesById,
+  // getMoviesById,
   getMoviesByName,
   getTrailer,
   getTrendingMovies,
