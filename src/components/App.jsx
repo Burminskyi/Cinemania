@@ -1,5 +1,5 @@
 import { lazy, useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { SharedLayout } from './SharedLayout/SharedLayout';
@@ -13,9 +13,15 @@ const Home = lazy(() => import('pages/Home/Home'));
 const Movies = lazy(() => import('pages/Movies/Movies'));
 
 export const App = () => {
-  const page = useSelector(state => state.movies.page);
-
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+
+  const paramsPage = searchParams.get('page');
+  if (paramsPage) {
+    dispatch(setPage(paramsPage));
+  }
+
+  const page = useSelector(state => state.movies.page);
 
   useEffect(() => {
     addThemeStyles();

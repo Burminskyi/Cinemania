@@ -17,7 +17,7 @@ import {
   setFavoriteMovies,
 } from 'redux/Movies/slice';
 
-export const ModalFilmDetails = ({ data, posterImage }) => {
+export const ModalFilmDetails = ({ data }) => {
   const favoriteMovies = useSelector(state => state.movies.favoriteMovies);
 
   const dispatch = useDispatch();
@@ -43,6 +43,12 @@ export const ModalFilmDetails = ({ data, posterImage }) => {
   const isInLibrary =
     favoriteMovies &&
     favoriteMovies.some(favoriteMovie => favoriteMovie.id === data.id);
+  
+  const imagePath = 'https://image.tmdb.org/t/p/original/';
+  const posterImage = data.poster_path
+    ? `${imagePath}${data.poster_path}`
+    : 'https://marketplace.canva.com/EAE9OZ4Eh9o/1/0/1131w/canva-black-minimalist-coming-soon-poster-rmN33IHdOEM.jpg';
+
 
   return (
     <StyledFilmDetailsContainer>

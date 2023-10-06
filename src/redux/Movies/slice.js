@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import {
-  // getMoviesById,
   getMoviesByName,
   getTrailer,
   getTrendingMovies,
@@ -61,7 +60,6 @@ export const fetchMoviesByName = createAsyncThunk(
   'movies/fetchMoviesByName',
   async (params, thunkApi) => {
     const { query, page } = params;
-    if (!query) return;
     try {
       const data = await getMoviesByName(query, page);
       return data;
@@ -70,18 +68,6 @@ export const fetchMoviesByName = createAsyncThunk(
     }
   }
 );
-
-// export const fetchGenres = createAsyncThunk(
-//   'movies/fetchGenres',
-//   async (id, thunkApi) => {
-//     try {
-//       const data = await getMoviesById(id);
-//       return data;
-//     } catch (error) {
-//       return thunkApi.rejectWithValue(error.message);
-//     }
-//   }
-// );
 
 const initialState = {
   isLoading: false,
@@ -94,7 +80,6 @@ const initialState = {
   favoriteMovies: [],
   error: null,
   trailerURL: null,
-  // movieGenres: [],
 };
 
 const moviesSlice = createSlice({
@@ -172,20 +157,6 @@ const moviesSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      //   // -----------GET MOVIE GENRES-------------
-      // .addCase(fetchGenres.pending, (state, action) => {
-      //   state.isLoading = true;
-      // })
-      // .addCase(fetchGenres.fulfilled, (state, action) => {
-      //   state.isLoading = false;
-      //   const { genres } = action.payload;
-      //   if (!genres) state.movieGenres = [];
-      //   else state.movieGenres = genres.map(obj => obj.name).join(', ');
-      // })
-      // .addCase(fetchGenres.rejected, (state, action) => {
-      //   state.isLoading = false;
-      //   state.error = action.payload;
-      // }),
       //   // -----------GET MOVIES BY NAME-------------
       .addCase(fetchMoviesByName.pending, (state, action) => {
         state.isLoading = true;

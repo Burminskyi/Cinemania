@@ -38,7 +38,10 @@ export const MoviesList = () => {
     }
 
     const page = searchParams.get('page');
+
     const query = searchParams.get('query');
+    if (!query) return;
+
     setQuery(query);
 
     if (page >= amountOfPages && query !== null) {
@@ -53,7 +56,14 @@ export const MoviesList = () => {
       page,
     };
     dispatch(fetchMoviesByName(params));
-  }, [amountOfPages, dispatch, query, searchParams, setSearchParams]);
+  }, [
+    amountOfPages,
+    dispatch,
+    query,
+    searchParams,
+    setSearchParams,
+    weeklyTrendingMovies,
+  ]);
 
   const handlePageChange = page => {
     dispatch(setPage(page));

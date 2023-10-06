@@ -57,12 +57,10 @@ export const StyledFilmDetailsWrap = styled.div`
 `;
 
 export const StyledFilmDetailsImg = styled.img`
-  width: 300px;
+  display: block;
+  width: 300px !important;
+  height: 450px;
   height: 100%;
-  @media (min-width: 768px) {
-  }
-  @media (min-width: 768px) {
-  }
 `;
 
 export const StyledFilmDetailsList = styled.ul`

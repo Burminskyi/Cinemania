@@ -7,8 +7,11 @@ import {
 } from './ModalPage.styled';
 
 import { ModalFilmDetails } from './ModalFilmDetails';
+import { TrailerModal } from './TrailerModal';
 
 export const Modal = ({ data, onClose }) => {
+  console.log('data: ', data);
+
   useEffect(() => {
     const keyDown = e => {
       if (e.code === 'Escape') {
@@ -22,11 +25,6 @@ export const Modal = ({ data, onClose }) => {
     };
   }, [onClose]);
 
-  const imagePath = 'https://image.tmdb.org/t/p/original/';
-  const posterImage = data.poster_path
-    ? `${imagePath}${data.poster_path}`
-    : 'https://marketplace.canva.com/EAE9OZ4Eh9o/1/0/1131w/canva-black-minimalist-coming-soon-poster-rmN33IHdOEM.jpg';
-
   const onOverlayClick = e => {
     if (e.currentTarget === e.target) {
       onClose();
@@ -37,7 +35,8 @@ export const Modal = ({ data, onClose }) => {
     <StyledModalOverlay onClick={onOverlayClick}>
       <StyledModal id="Modal">
         <StyledCloseModalBtn variant="white" onClick={onClose} />
-        <ModalFilmDetails data={data} posterImage={posterImage} />
+        {typeof data === 'object' && <ModalFilmDetails data={data} />}
+        {typeof data === 'number' && <TrailerModal data={data} />}
       </StyledModal>
     </StyledModalOverlay>
   );

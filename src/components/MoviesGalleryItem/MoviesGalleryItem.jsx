@@ -17,14 +17,12 @@ import { getMoviesById } from 'services/getMovies';
 
 export const MoviesGalleryItem = ({ movie }) => {
   const { poster_path, original_title, release_date, vote_average, id } = movie;
-  const [isLoaded, setIsLoaded] = useState(false);
   const [movieGenres, setMovieGenres] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        setIsLoaded(false);
         const data = await getMoviesById(id);
         const { genres } = data;
         const genresNames = genres.map(obj => obj.name).join(', ');
@@ -32,7 +30,6 @@ export const MoviesGalleryItem = ({ movie }) => {
       } catch (error) {
         console.log(error.message);
       } finally {
-        setIsLoaded(true);
       }
     };
     fetchGenres();
@@ -62,15 +59,13 @@ export const MoviesGalleryItem = ({ movie }) => {
 
           <StyledFilmInfo>
             <p>{original_title ? original_title : 'Coming soon'}</p>
-            {isLoaded && (
-              <StyledFilmInfoWrap>
-                <StyledJenresList>
-                  {movieGenres.length ? movieGenres : 'Unknown'}
-                </StyledJenresList>
-                <p>|</p>
-                <p>{releaseYear ? releaseYear : 'Unknown'}</p>
-              </StyledFilmInfoWrap>
-            )}
+            <StyledFilmInfoWrap>
+              <StyledJenresList>
+                {movieGenres.length ? movieGenres : 'Unknown'}
+              </StyledJenresList>
+              <p>|</p>
+              <p>{releaseYear ? releaseYear : 'Unknown'}</p>
+            </StyledFilmInfoWrap>
           </StyledFilmInfo>
         </StyledPhotoCard>
         <Rating rating={vote_average} />
