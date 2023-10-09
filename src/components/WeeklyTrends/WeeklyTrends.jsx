@@ -22,6 +22,7 @@ const WeeklyTrends = () => {
   );
 
   useEffect(() => {
+    if (!weeklyTrendingMovies) return;
     setSlicedWeeklyTrendingMovies(weeklyTrendingMovies.slice(0, 3));
   }, [weeklyTrendingMovies]);
 

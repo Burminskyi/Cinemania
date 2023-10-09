@@ -12,7 +12,7 @@ export const fetchWeeklyTrendingMovies = createAsyncThunk(
   'movies/fetchWeeklyTrendingMovies',
   async (page, thunkApi) => {
     try {
-      const data = await getWeeklyTrendingMovies(page);
+      const data = await getWeeklyTrendingMovies(page < 500 ? page : 500);
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -71,8 +71,8 @@ export const fetchMoviesByName = createAsyncThunk(
 
 const initialState = {
   isLoading: false,
-  weeklyTrendingMovies: [],
-  requestedMovies: [],
+  weeklyTrendingMovies: null,
+  requestedMovies: null,
   trendingMovie: null,
   upcomingMovie: null,
   totalPages: 1,
@@ -87,7 +87,12 @@ const moviesSlice = createSlice({
   initialState,
   reducers: {
     setPage: (state, action) => {
+      // const amountOfPages = state.totalPages < 500 ? state.totalPages : 500;
+      // if (action.payload >= amountOfPages) {
+      //   state.page = amountOfPages;
+      // } else {
       state.page = action.payload;
+      // }
     },
     setFavoriteMovies: (state, action) => {
       state.favoriteMovies.push(action.payload);
@@ -166,6 +171,7 @@ const moviesSlice = createSlice({
         if (!action.payload) return;
         state.requestedMovies = action.payload.results;
         state.totalPages = action.payload.total_pages;
+        state.weeklyTrendingMovies = null;
       })
       .addCase(fetchMoviesByName.rejected, (state, action) => {
         state.isLoading = false;

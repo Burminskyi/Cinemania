@@ -13,20 +13,46 @@ const Home = lazy(() => import('pages/Home/Home'));
 const Movies = lazy(() => import('pages/Movies/Movies'));
 
 export const App = () => {
-  const dispatch = useDispatch();
-  const [searchParams] = useSearchParams();
-
-  const paramsPage = searchParams.get('page');
-  if (paramsPage) {
-    dispatch(setPage(paramsPage));
-  }
-
+  const requestedMovies = useSelector(state => state.movies.requestedMovies);
+  console.log('requestedMovies: ', requestedMovies);
   const page = useSelector(state => state.movies.page);
+  console.log('page: ', page);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramsPage = Number(searchParams.get('page'));
+
+  const dispatch = useDispatch();
+  // let page;
+
+  // if (paramsPage) {
+  //   // if (paramsPage > 500) {
+  //   //   setSearchParams({ page: 500 });
+  //   // }
+  //   page = paramsPage;
+  //   dispatch(setPage(paramsPage > 500 ? 500 : paramsPage));
+  // } else {
+  //   page = 1;
+  // }
 
   useEffect(() => {
+    if (requestedMovies) return;
+    if (!paramsPage) return;
+    if (paramsPage > 500) {
+      setSearchParams({ page: 500 });
+    }
     addThemeStyles();
+
+    dispatch(setPage(paramsPage));
+    dispatch(fetchWeeklyTrendingMovies(paramsPage));
+  }, [dispatch, paramsPage, requestedMovies, setSearchParams]);
+
+  useEffect(() => {
+    if (requestedMovies) return;
+    if (paramsPage) return;
+    addThemeStyles();
+
     dispatch(fetchWeeklyTrendingMovies(page));
-  }, [dispatch, page]);
+  }, [dispatch, page, paramsPage, requestedMovies]);
 
   const handlePageChange = page => {
     dispatch(setPage(page));

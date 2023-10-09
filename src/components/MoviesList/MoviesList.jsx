@@ -19,9 +19,12 @@ export const MoviesList = () => {
   const totalPages = useSelector(state => state.movies.totalPages);
   const isLoading = useSelector(state => state.movies.isLoading);
   const requestedMovies = useSelector(state => state.movies.requestedMovies);
+  console.log('requestedMovies: ', requestedMovies);
+
   const weeklyTrendingMovies = useSelector(
     state => state.movies.weeklyTrendingMovies
   );
+  console.log('weeklyTrendingMovies: ', weeklyTrendingMovies);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const componentRef = useRef(null);
@@ -31,6 +34,8 @@ export const MoviesList = () => {
   const dispatch = useDispatch();
 
   const amountOfPages = totalPages < 500 ? totalPages : 500;
+
+  // useEffect(() => {}, [weeklyTrendingMovies]);
 
   useEffect(() => {
     if (componentRef.current) {
@@ -44,12 +49,17 @@ export const MoviesList = () => {
 
     setQuery(query);
 
-    if (page >= amountOfPages && query !== null) {
-      setSearchParams({ query, page: amountOfPages });
-    }
-    if (page >= amountOfPages && query === null) {
-      setSearchParams({ page: amountOfPages });
-    }
+    setSearchParams({
+      query,
+      page: page >= amountOfPages ? amountOfPages : page,
+    });
+
+    // if (page >= amountOfPages && query !== null) {
+    //   setSearchParams({ query, page: amountOfPages });
+    // }
+    // if (page >= amountOfPages && query === null) {
+    //   setSearchParams({ page: amountOfPages });
+    // }
 
     const params = {
       query,
@@ -59,7 +69,6 @@ export const MoviesList = () => {
   }, [
     amountOfPages,
     dispatch,
-    query,
     searchParams,
     setSearchParams,
     weeklyTrendingMovies,
@@ -91,13 +100,14 @@ export const MoviesList = () => {
         ) : (
           <>
             <StyledCatalogList>
-              {requestedMovies && requestedMovies.length
-                ? requestedMovies.map(movie => (
-                    <MoviesGalleryItem key={movie.id} movie={movie} />
-                  ))
-                : weeklyTrendingMovies.map(movie => (
-                    <MoviesGalleryItem key={movie.id} movie={movie} />
-                  ))}
+              {weeklyTrendingMovies &&
+                weeklyTrendingMovies.map(movie => (
+                  <MoviesGalleryItem key={movie.id} movie={movie} />
+                ))}
+              {requestedMovies &&
+                requestedMovies.map(movie => (
+                  <MoviesGalleryItem key={movie.id} movie={movie} />
+                ))}
             </StyledCatalogList>
 
             {!isLoading && totalPages > 1 && (
