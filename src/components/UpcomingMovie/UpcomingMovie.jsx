@@ -24,11 +24,12 @@ import {
   removeFromFavoriteMovies,
   setFavoriteMovies,
 } from 'redux/Movies/slice';
+import { selectFavoriteMovies, selectLoadingStatus, selectUpcomingMovie } from 'redux/selectors';
 
 export const UpcomingMovie = () => {
-  const isLoading = useSelector(state => state.movies.isLoading);
-  const upcomingMovie = useSelector(state => state.movies.upcomingMovie);
-  const favoriteMovies = useSelector(state => state.movies.favoriteMovies);
+  const isLoading = useSelector(selectLoadingStatus);
+  const upcomingMovie = useSelector(selectUpcomingMovie);
+  const favoriteMovies = useSelector(selectFavoriteMovies);
 
   const dispatch = useDispatch();
 

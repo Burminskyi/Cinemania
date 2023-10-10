@@ -16,10 +16,11 @@ import { Modal } from 'components/ModalPage/Modal';
 import { Loader } from 'components/Loader/Loader';
 
 import { fetchTrendingMoviesOfTheDay } from 'redux/Movies/slice';
+import { selectLoadingStatus, selectTrendingMovie } from 'redux/selectors';
 
 const Hero = () => {
-  const isLoading = useSelector(state => state.movies.isLoading);
-  const trendingMovie = useSelector(state => state.movies.trendingMovie);
+  const isLoading = useSelector(selectLoadingStatus);
+  const trendingMovie = useSelector(selectTrendingMovie);
 
   const [modalProps, setModalProps] = useState(null);
 

@@ -8,14 +8,15 @@ import Library from 'pages/Library/Library';
 import { addThemeStyles } from 'services/themeSwitcher';
 
 import { fetchWeeklyTrendingMovies, setPage } from 'redux/Movies/slice';
+import { selectPage, selectRequestedMovies } from 'redux/selectors';
 
 const Home = lazy(() => import('pages/Home/Home'));
 const Movies = lazy(() => import('pages/Movies/Movies'));
 
 export const App = () => {
-  const requestedMovies = useSelector(state => state.movies.requestedMovies);
+  const requestedMovies = useSelector(selectRequestedMovies);
   console.log('requestedMovies: ', requestedMovies);
-  const page = useSelector(state => state.movies.page);
+  const page = useSelector(selectPage);
   console.log('page: ', page);
 
   const [searchParams, setSearchParams] = useSearchParams();

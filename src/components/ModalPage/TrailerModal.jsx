@@ -7,10 +7,11 @@ import {
 } from './ModalPage.styled';
 
 import { fetchTrailer } from 'redux/Movies/slice';
+import { selectTrailerURL } from 'redux/selectors';
 
 export const TrailerModal = ({ data } ) => {
   console.log('trailerID: ', data);
-  const trailerURL = useSelector(state => state.movies.trailerURL);
+  const trailerURL = useSelector(selectTrailerURL);
 
   const dispatch = useDispatch();
 

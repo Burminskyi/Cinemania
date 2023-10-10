@@ -10,7 +10,6 @@ import { ModalFilmDetails } from './ModalFilmDetails';
 import { TrailerModal } from './TrailerModal';
 
 export const Modal = ({ data, onClose }) => {
-  console.log('data: ', data);
 
   useEffect(() => {
     const keyDown = e => {

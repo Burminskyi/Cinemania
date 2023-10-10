@@ -14,17 +14,15 @@ import {
   StyledCatalogList,
 } from 'components/WeeklyTrends/WeeklyTrendsStyled';
 import { StyledMoviesList } from './MoviesList.styled';
+import { selectLoadingStatus, selectRequestedMovies, selectTotalPages, selectWeeklyTrendingMovies } from 'redux/selectors';
 
 export const MoviesList = () => {
-  const totalPages = useSelector(state => state.movies.totalPages);
-  const isLoading = useSelector(state => state.movies.isLoading);
-  const requestedMovies = useSelector(state => state.movies.requestedMovies);
-  console.log('requestedMovies: ', requestedMovies);
-
-  const weeklyTrendingMovies = useSelector(
-    state => state.movies.weeklyTrendingMovies
-  );
+  const totalPages = useSelector(selectTotalPages);
+  const isLoading = useSelector(selectLoadingStatus);
+  const requestedMovies = useSelector(selectRequestedMovies);
+  const weeklyTrendingMovies = useSelector(selectWeeklyTrendingMovies);
   console.log('weeklyTrendingMovies: ', weeklyTrendingMovies);
+  
   const [searchParams, setSearchParams] = useSearchParams();
 
   const componentRef = useRef(null);
@@ -34,8 +32,6 @@ export const MoviesList = () => {
   const dispatch = useDispatch();
 
   const amountOfPages = totalPages < 500 ? totalPages : 500;
-
-  // useEffect(() => {}, [weeklyTrendingMovies]);
 
   useEffect(() => {
     if (componentRef.current) {

@@ -7,6 +7,8 @@ import {
   StyledPaginationPrev,
 } from './Pagination.styled';
 
+import { selectPage } from 'redux/selectors';
+
 export const MyPagination = ({
   totalPages,
   onChangePage,
@@ -15,7 +17,9 @@ export const MyPagination = ({
 }) => {
   let items = [];
   const amountOfPages = totalPages < 500 ? totalPages : 500;
-  const page = useSelector(state => state.movies.page);
+
+  const page = useSelector(selectPage);
+
   const currentPage = Number(page);
 
   if (currentPage > 1) {

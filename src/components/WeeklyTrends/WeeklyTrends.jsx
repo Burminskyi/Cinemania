@@ -10,12 +10,11 @@ import {
 
 import { Loader } from 'components/Loader/Loader';
 import { MoviesGalleryItem } from 'components/MoviesGalleryItem/MoviesGalleryItem';
+import { selectLoadingStatus, selectWeeklyTrendingMovies } from 'redux/selectors';
 
 const WeeklyTrends = () => {
-  const weeklyTrendingMovies = useSelector(
-    state => state.movies.weeklyTrendingMovies
-  );
-  const isLoading = useSelector(state => state.movies.isLoading);
+  const weeklyTrendingMovies = useSelector(selectWeeklyTrendingMovies);
+  const isLoading = useSelector(selectLoadingStatus);
 
   const [slicedWeeklyTrendingMovies, setSlicedWeeklyTrendingMovies] = useState(
     []

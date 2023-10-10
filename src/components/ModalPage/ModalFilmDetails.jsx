@@ -16,9 +16,10 @@ import {
   removeFromFavoriteMovies,
   setFavoriteMovies,
 } from 'redux/Movies/slice';
+import { selectFavoriteMovies } from 'redux/selectors';
 
 export const ModalFilmDetails = ({ data }) => {
-  const favoriteMovies = useSelector(state => state.movies.favoriteMovies);
+  const favoriteMovies = useSelector(selectFavoriteMovies);
 
   const dispatch = useDispatch();
 
