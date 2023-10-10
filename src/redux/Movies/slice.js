@@ -80,6 +80,7 @@ const initialState = {
   favoriteMovies: [],
   error: null,
   trailerURL: null,
+  totalPagesOfRequest: null,
 };
 
 const moviesSlice = createSlice({
@@ -87,12 +88,7 @@ const moviesSlice = createSlice({
   initialState,
   reducers: {
     setPage: (state, action) => {
-      // const amountOfPages = state.totalPages < 500 ? state.totalPages : 500;
-      // if (action.payload >= amountOfPages) {
-      //   state.page = amountOfPages;
-      // } else {
       state.page = action.payload;
-      // }
     },
     setFavoriteMovies: (state, action) => {
       state.favoriteMovies.push(action.payload);
@@ -172,6 +168,7 @@ const moviesSlice = createSlice({
         state.requestedMovies = action.payload.results;
         state.totalPages = action.payload.total_pages;
         state.weeklyTrendingMovies = null;
+        state.totalPagesOfRequest = action.payload.total_pages;
       })
       .addCase(fetchMoviesByName.rejected, (state, action) => {
         state.isLoading = false;

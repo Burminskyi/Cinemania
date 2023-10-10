@@ -23,13 +23,15 @@ const Hero = () => {
   const trendingMovie = useSelector(selectTrendingMovie);
 
   const [modalProps, setModalProps] = useState(null);
+  
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setModalProps(null);
+    if (trendingMovie) return;
+      setModalProps(null);
     dispatch(fetchTrendingMoviesOfTheDay());
-  }, [dispatch]);
+  }, [dispatch, trendingMovie]);
 
   const onModalClose = () => {
     setModalProps(null);

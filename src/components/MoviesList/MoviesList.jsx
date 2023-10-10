@@ -2,7 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchMoviesByName, setPage } from 'redux/Movies/slice';
+import {
+  fetchMoviesByName,
+  fetchWeeklyTrendingMovies,
+  setPage,
+} from 'redux/Movies/slice';
 
 import { MoviesGalleryItem } from 'components/MoviesGalleryItem/MoviesGalleryItem';
 import { SearchForm } from 'components/SearchForm/SearchForm';
@@ -14,15 +18,22 @@ import {
   StyledCatalogList,
 } from 'components/WeeklyTrends/WeeklyTrendsStyled';
 import { StyledMoviesList } from './MoviesList.styled';
-import { selectLoadingStatus, selectRequestedMovies, selectTotalPages, selectWeeklyTrendingMovies } from 'redux/selectors';
+import {
+  selectLoadingStatus,
+  selectRequestedMovies,
+  selectTotalPages,
+  selectTotalPagesOfRequest,
+  selectWeeklyTrendingMovies,
+} from 'redux/selectors';
 
 export const MoviesList = () => {
   const totalPages = useSelector(selectTotalPages);
+  const totalPagesOfRequest = useSelector(selectTotalPagesOfRequest);
   const isLoading = useSelector(selectLoadingStatus);
   const requestedMovies = useSelector(selectRequestedMovies);
   const weeklyTrendingMovies = useSelector(selectWeeklyTrendingMovies);
   console.log('weeklyTrendingMovies: ', weeklyTrendingMovies);
-  
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const componentRef = useRef(null);
@@ -31,43 +42,59 @@ export const MoviesList = () => {
 
   const dispatch = useDispatch();
 
-  const amountOfPages = totalPages < 500 ? totalPages : 500;
+  const paramsPage = Number(searchParams.get('page'));
+  const paramsQuery = searchParams.get('query');
+
+  useEffect(() => {
+    if (componentRef.current) {
+      componentRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (paramsQuery) return;
+    if (!paramsPage) return;
+    if (paramsPage > 500) {
+      setSearchParams({ page: 500 });
+    }
+
+    dispatch(setPage(paramsPage));
+    dispatch(fetchWeeklyTrendingMovies(paramsPage));
+  }, [dispatch, paramsPage, paramsQuery, requestedMovies, setSearchParams]);
 
   useEffect(() => {
     if (componentRef.current) {
       componentRef.current.scrollIntoView({ behavior: 'smooth' });
     }
 
-    const page = searchParams.get('page');
+    if (!paramsQuery) return;
+
+    let page = Number(searchParams.get('page'));
+
+    if (totalPagesOfRequest) {
+      page =
+        Number(searchParams.get('page')) > totalPagesOfRequest
+          ? totalPagesOfRequest
+          : Number(searchParams.get('page'));
+    }
 
     const query = searchParams.get('query');
-    if (!query) return;
-
     setQuery(query);
 
     setSearchParams({
       query,
-      page: page >= amountOfPages ? amountOfPages : page,
+      page,
     });
-
-    // if (page >= amountOfPages && query !== null) {
-    //   setSearchParams({ query, page: amountOfPages });
-    // }
-    // if (page >= amountOfPages && query === null) {
-    //   setSearchParams({ page: amountOfPages });
-    // }
 
     const params = {
       query,
       page,
     };
+    dispatch(setPage(page));
     dispatch(fetchMoviesByName(params));
   }, [
-    amountOfPages,
     dispatch,
+    paramsQuery,
     searchParams,
     setSearchParams,
-    weeklyTrendingMovies,
+    totalPagesOfRequest,
   ]);
 
   const handlePageChange = page => {

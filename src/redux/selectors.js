@@ -9,3 +9,5 @@ export const selectPage = state => state.movies.page;
 export const selectFavoriteMovies = state => state.movies.favoriteMovies;
 export const selectError = state => state.movies.error;
 export const selectTrailerURL = state => state.movies.trailerURL;
+export const selectTotalPagesOfRequest = state =>
+  state.movies.totalPagesOfRequest;
