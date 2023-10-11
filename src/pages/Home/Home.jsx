@@ -6,7 +6,6 @@ import WeeklyTrends from 'components/WeeklyTrends/WeeklyTrends';
 
 const Home = ({ onChangePage }) => {
   useEffect(() => {
-    
     onChangePage(1);
   }, [onChangePage]);
 

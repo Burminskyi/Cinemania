@@ -32,7 +32,6 @@ export const MoviesList = () => {
   const isLoading = useSelector(selectLoadingStatus);
   const requestedMovies = useSelector(selectRequestedMovies);
   const weeklyTrendingMovies = useSelector(selectWeeklyTrendingMovies);
-  console.log('weeklyTrendingMovies: ', weeklyTrendingMovies);
 
   const [searchParams, setSearchParams] = useSearchParams();
 

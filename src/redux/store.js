@@ -12,6 +12,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 
 import { moviesReducer } from './Movies/slice';
+import { themeReducer } from './Theme/slice';
 
 const moviesPersistConfig = {
   key: 'movies',
@@ -19,9 +20,16 @@ const moviesPersistConfig = {
   whitelist: ['favoriteMovies'],
 };
 
+const themesPersistConfig = {
+  key: 'theme',
+  storage,
+  whitelist: ['themeStyle'],
+};
+
 export const store = configureStore({
   reducer: {
     movies: persistReducer(moviesPersistConfig, moviesReducer),
+    theme: persistReducer(themesPersistConfig, themeReducer),
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

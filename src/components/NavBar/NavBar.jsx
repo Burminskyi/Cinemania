@@ -11,11 +11,14 @@ import {
   StyledThemeSwitcher,
 } from './NavBar.styled';
 
-import { setTheme } from 'services/themeSwitcher';
-
 import logo from './header-logo.svg';
+import { useDispatch } from 'react-redux';
+import { setThemeStyle } from 'redux/Theme/slice';
 
 const NavBar = () => {
+  const dispatch = useDispatch();
+  const setTheme = () => dispatch(setThemeStyle());
+
   return (
     <StyledNavbar collapseOnSelect expand="lg">
       <Container>

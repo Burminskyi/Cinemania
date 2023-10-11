@@ -8,13 +8,14 @@ import Library from 'pages/Library/Library';
 import { addThemeStyles } from 'services/themeSwitcher';
 
 import { fetchWeeklyTrendingMovies, setPage } from 'redux/Movies/slice';
-import { selectPage } from 'redux/selectors';
+import { selectPage, selectThemeStyle } from 'redux/selectors';
 
 const Home = lazy(() => import('pages/Home/Home'));
 const Movies = lazy(() => import('pages/Movies/Movies'));
 
 export const App = () => {
   const page = useSelector(selectPage);
+  const themeStyle = useSelector(selectThemeStyle);
 
   const [searchParams] = useSearchParams();
   const paramsPage = Number(searchParams.get('page'));
@@ -22,9 +23,11 @@ export const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (paramsPage) return;
-    addThemeStyles();
+    addThemeStyles(themeStyle);
+  }, [themeStyle]);
 
+  useEffect(() => {
+    if (paramsPage) return;
     dispatch(fetchWeeklyTrendingMovies(page));
   }, [dispatch, page, paramsPage]);
 

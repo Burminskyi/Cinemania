@@ -11,3 +11,5 @@ export const selectError = state => state.movies.error;
 export const selectTrailerURL = state => state.movies.trailerURL;
 export const selectTotalPagesOfRequest = state =>
   state.movies.totalPagesOfRequest;
+  
+export const selectThemeStyle = state => state.theme.themeStyle;
